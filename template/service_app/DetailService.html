@@ -1,0 +1,578 @@
+{% extends "main_template.html" %}
+{% load static %}
+{% load render_partial %}
+{% load humanize %}
+
+{% block meta1 %}
+<title>{{meta.page_title}}</title>
+<meta name="description" content="{{meta.description}}"/>
+{% if meta.index == True %}
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+{% else %}
+<meta name="robots" content="nofollow, noindex, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+{% endif %}
+<meta property="og:title" content="{{meta.page_title}}" />
+<meta property="og:description" content="{{meta.description}}" />
+<meta property="og:site_name" content="{{meta.site_name}}" />
+<meta property="og:updated_time" content="{{meta.updated_at}}" />
+<meta property="og:image" content="{{meta.og_image}}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{meta.alt}}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="article:published_time" content="{{meta.created_at}}" />
+<meta property="article:modified_time" content="{{meta.updated_at}}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{meta.page_title}}" />
+<meta name="twitter:description" content="{{meta.description}}" />
+<meta name="twitter:site" content="@ranksefr_com" />
+<meta name="twitter:creator" content="@ranksefr_com" />
+<meta name="twitter:image" content="{{meta.og_image}}" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="صدرا ابادکار" />
+<meta name="twitter:label2" content="Time to read" />
+<meta name="twitter:data2" content="کمتر از یک دقیقه" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "{{ meta.page_title }}",
+  "description": "{{ meta.description }}",
+  "url": "{{ request.build_absolute_uri }}",
+  "inLanguage": "fa",
+  "datePublished": "{{ meta.created_at }}",
+  "dateModified": "{{ meta.updated_at }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "{{ meta.site_name }}",
+    "url": "{{ site_url }}"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "صدرا ابادکار"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "{{ meta.og_image }}",
+    "width": "1200",
+    "height": "630",
+    "caption": "{{ meta.alt }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ meta.site_name }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ site_logo_url }}",
+      "width": "600",
+      "height": "60"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ request.build_absolute_uri }}"
+  },
+  "hasPart": [
+    {% for ser in service.service_video.all %}
+    {
+      "@type": "VideoObject",
+      "name": "{{ service.title|escape }}",
+      "description": "{{ meta.description|escape }}",
+      "thumbnailUrl": "{{ meta.og_image }}",
+      "uploadDate": "{{ meta.updated_at|date:'c' }}",
+      "contentUrl": "{{ media_url }}{{ ser.file_video }}",
+      "embedUrl": "{{ request.build_absolute_uri }}",
+      "caption": "ویدیوی توضیحات خدمات"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock meta1 %}
+
+{% block json1 %}
+{% endblock json1 %}
+
+{% block content %}
+
+
+<style>
+.mobile-plans-scroller {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 -15px;
+}
+
+.mobile-plans-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scroller-container {
+  display: inline-flex;
+  gap: 15px;
+  padding: 0 15px;
+  min-width: 100%;
+}
+
+.plan-card {
+  min-width: 85vw;
+  max-width: 85vw;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.scroller-hint {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0 15px;
+}
+
+.scroller-hint i {
+  animation: bounce 1.5s infinite;
+  color: #4e54c8;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+/* حفظ استایل‌های اصلی شما */
+.plan-cta-btn {
+  background: linear-gradient(to left, #4e54c8, #8f94fb);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cta-icon {
+  font-size: 1rem;
+}
+
+.cta-arrow {
+  font-size: 0.9rem;
+}
+</style>
+
+
+<link href="{% static 'css/service1232.css' %}" rel="stylesheet" />
+
+<div class="page-header" style="background-image: url('{{ media_url }}img/ell.jpg'); background-repeat: no-repeat; background-position: center center; background-size: cover;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-header-box">
+          <h1 class="text-anime-style-3 fancy-heading">{{ service.title }}</h1>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'main:index' %}">خانه</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'service:services' %}">خدمات {% render_partial 'company:name' %}</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'service:by_group' slug=service.groups.slug %}">خدمات {{service.groups.title_group}}</a></li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+<div class="custom-video-section">
+  {% for ser in service.service_video.all %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="video-card">
+        <div class="horizontal-video-container">
+          <video class="lazy-horizontal-video" 
+                 data-src="{{ media_url }}{{ser.file_video}}" 
+                 poster="{% if ser.thumbnail %}{{ media_url }}{{ ser.thumbnail.url }}{% else %}{% static 'img/video-poster.jpg' %}{% endif %}"
+                 controls 
+                 playsinline 
+                 aria-label="ویدیوی توضیحات خدمات" 
+                 preload="none">
+            <track kind="captions" src="{% static 'captions/video-captions.vtt' %}" srclang="fa" label="فارسی">
+            مرورگر شما از این ویدیو پشتیبانی نمی‌کند.
+          </video>
+          
+          <div class="play-button-wrapper">
+            <button class="play-button" aria-label="پخش ویدیو">
+              <span class="play-icon"></span>
+              <span class="pulse-effect"></span>
+            </button>
+          </div>
+        </div>
+        
+        {% if ser.title %}
+        <div class="video-caption">
+          <span>{{ ser.title }}</span>
+          <p>{{ ser.description|truncatechars:100 }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<br><br>
+
+<div class="your-choice">
+  <div class="container">
+    <div class="row section-row align-items-center mb-4">
+      <div class="col-lg-7 col-md-12">
+        <div class="section-title">
+          <span class="d-block mb-1">انتخاب شما</span>
+          <span class="text-anime-style-3 mb-0">هزینه و پلن های پایه شرکت</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- دسکتاپ: حالت عادی ردیفی -->
+    <div class="row d-none d-md-flex g-4">
+      {% for plan in service.plan_service.all %}
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="your-choice-item card h-100 d-flex flex-column" aria-labelledby="plan-title-{{ forloop.counter }}">
+          <div class="card-body d-flex flex-column">
+            <div class="your-choice-title mb-3">
+              <span id="plan-title-{{ forloop.counter }}" class="h5 mb-0 text-truncate">
+                {{ plan.title }}
+              </span>
+            </div>
+            
+            <div class="your-choice-image mb-3">
+              <img 
+                alt="{{ plan.title }}" 
+                src="{{ media_url }}{{ plan.image_name }}" 
+                class="img-fluid rounded" 
+                style="width: 100%; height: 180px; object-fit: cover;" />
+            </div>
+            
+            <ul class="feature-list flex-grow-1 mb-4 px-2">
+              {% for item_p in plan.plan_item.all %}
+              <li class="mb-2 d-flex align-items-start">
+                {% if item_p.is_checked %}
+                  <i class="bi bi-check2-circle text-success me-2 mt-1"></i>
+                {% else %}
+                  <i class="bi bi-x-circle text-danger me-2 mt-1"></i>
+                {% endif %}
+                <span>{{ item_p.title }}</span>
+                <br>
+              </li>
+              {% endfor %}
+            </ul>
+            
+            <div class="plan-price mb-3 text-center fs-5 fw-bold text-success">
+              {{ plan.price|intcomma }} تومان
+            </div>
+            
+            <!-- بخش CTA -->
+            <div class="plan-cta-wrapper mt-auto pt-3">
+              <a href="/call" class="plan-cta-btn d-block mx-auto text-decoration-none">
+                <span class="cta-icon">
+                  <i class="bi bi-telephone-fill"></i>
+                </span>
+                <span class="cta-text">مشاوره رایگان</span>
+                <span class="cta-arrow">
+                  <i class="bi bi-arrow-left"></i>
+                </span>
+              </a>
+              <div class="cta-hint text-center mt-2">
+                <i class="bi bi-info-circle text-muted"></i> همین حالا با ما تماس بگیرید
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+   
+    <!-- موبایل: اسلاید افقی -->
+   <div class="mobile-plans-scroller d-md-none">
+  <div class="scroller-container">
+    {% for plan in service.plan_service.all %}
+    <div class="plan-card" tabindex="0" aria-labelledby="mobile-plan-{{ forloop.counter }}">
+      <div class="card-header">
+        <span style='font-size: 18px;
+  color: #333;
+  padding: 10px;'
+  
+  id="mobile-plan-{{ forloop.counter }}" class="h5 mb-0 text-truncate">{{ plan.title }}</span>
+      </div>
+      
+      <div class="your-choice-image mb-3">
+        <img 
+          alt="{{ plan.title }}" 
+          src="{{ media_url }}{{ plan.image_name }}" 
+          class="img-fluid rounded" 
+          style="width: 100%; height: 150px; object-fit: cover;" />
+      </div>
+      
+      <ul class="feature-list flex-grow-1 mb-3 px-2">
+        {% for item_p in plan.plan_item.all %}
+        <li class="mb-2 d-flex align-items-start">
+          {% if item_p.is_checked %}
+            <i class="bi bi-check2-circle text-success me-2 mt-1"></i>
+          {% else %}
+            <i class="bi bi-x-circle text-danger me-2 mt-1"></i>
+          {% endif %}
+          <span>{{ item_p.title }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      
+      <div class="plan-price mb-3 text-center fs-5 fw-bold text-success">
+        {{ plan.price|intcomma }} تومان
+      </div>
+      
+      <div class="plan-cta-wrapper mt-auto">
+        <a href="/call" class="plan-cta-btn d-block mx-auto text-decoration-none">
+          <span class="cta-icon">
+            <i class="bi bi-telephone-fill"></i>
+          </span>
+          <span class="cta-text">مشاوره رایگان</span>
+          <span class="cta-arrow">
+            <i class="bi bi-arrow-left"></i>
+          </span>
+        </a>
+        <div class="cta-hint text-center mt-2 small">
+          <i class="bi bi-info-circle text-muted"></i> همین حالا تماس بگیرید
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+  <div class="scroller-hint">
+    <i class="bi bi-arrow-left"></i>
+    اسکرول کنید ← →
+    <i class="bi bi-arrow-right"></i>
+  </div>
+</div>
+
+</div>
+
+{% if service.gallery_images.all %}
+<div class="sample-gallery">
+  <div class="container">
+    <div class="row g-3">
+      {% for image in service.gallery_images.all|slice:":6" %}
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="gallery-item">
+          <img 
+            src="{{ media_url }}{{ image.image }}" 
+            alt="{{ image.alt_text|default:'نمونه کار' }}"
+            class="img-fluid rounded"
+            loading="lazy"
+            width="300"
+            height="200"
+          >
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="page-service-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="service-single-content">
+          <div class="service-featured-image">
+            <figure>
+              <img alt="{{ service.title }}" src="{{ media_url }}{{ service.image_name }}" />
+            </figure>
+          </div>
+          <div class="service-entry" style="text-align: justify;">
+            <p class='imp' data-wow-delay="0.25s">
+              {% autoescape off %}{{ service.description }}{% endautoescape %}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="service-sidebar">
+          <div class="services-list-box" data-wow-delay="0.5s">
+            <div class="icon-box">
+              <img alt="ایکون لیست خدمات" src="{{ media_url }}images/icon-service-list.svg" />
+            </div>
+            <div class='h2' style='color:#333;'>{{ service.title }}</div>
+            <ul>
+              {% for item in service.item_services.all %}
+                <li><span>{{ item.title }}</span></li>
+              {% endfor %}
+            </ul>
+            {% render_partial 'company:mobile_number' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="service-faqs">
+  <div class="container">
+    <div class="row section-row align-items-center">
+      <div class="col-lg-12">
+        <div class="section-title">
+             <div>سوال متداول</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="faq-accordion" id="accordion">
+          {% for q in service.services_faqs.all %}
+          <div class="accordion-item" data-wow-delay="0.25s">
+            <div class="accordion-header" id="heading{{ forloop.counter }}">
+              <button
+                aria-controls="collapse{{ forloop.counter }}"
+                aria-expanded="false"
+                class="accordion-button collapsed"
+                data-bs-target="#collapse{{ forloop.counter }}"
+                data-bs-toggle="collapse"
+                type="button"
+              >
+                {{ q.question }}
+              </button>
+            </div>
+            <div
+              aria-labelledby="heading{{ forloop.counter }}"
+              class="accordion-collapse collapse"
+              data-bs-parent="#accordion"
+              id="collapse{{ forloop.counter }}"
+            >
+              <div class="accordion-body">
+                <p>
+                  {{ q.answer }}
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align: center;">
+  <iframe 
+    src="{{service.city}}" 
+    width="700" 
+    height="550" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade"
+    title="نقشه موقعیت جغرافیایی"
+    aria-label="نقشه موقعیت جغرافیایی شرکت"
+  ></iframe>
+</div>
+
+<footer role="contentinfo">
+  تمامی حقوق محفوظ است.
+</footer>
+
+<script src="{% static 'js/service221.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // لود تنبل ویدیوها فقط در بخش custom-video-section
+  const lazyVideos = document.querySelectorAll('.custom-video-section .lazy-horizontal-video');
+  const playButtons = document.querySelectorAll('.custom-video-section .play-button');
+  
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const video = entry.target;
+        video.src = video.getAttribute('data-src');
+        video.load();
+        videoObserver.unobserve(video);
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  lazyVideos.forEach(video => {
+    videoObserver.observe(video);
+  });
+  
+  playButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const video = this.closest('.horizontal-video-container').querySelector('video');
+      video.play();
+      this.style.opacity = '0';
+      this.style.pointerEvents = 'none';
+    });
+  });
+  
+  lazyVideos.forEach(video => {
+    video.addEventListener('pause', function() {
+      const button = this.closest('.horizontal-video-container').querySelector('.play-button');
+      button.style.opacity = '1';
+      button.style.pointerEvents = 'auto';
+    });
+  });
+
+  // تنظیم line-height برای محتوای سرویس
+  document.querySelectorAll('.service-entry *').forEach(el => {
+    const tag = el.tagName.toLowerCase();
+    const isHeading = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'table', 'li', 'ul', 'span', 'i'].includes(tag);
+    const isEmpty = !el.textContent.trim();
+    if (!isHeading && !isEmpty) {
+      el.style.lineHeight = '3';
+    }
+  });
+});
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+        const ctaButtons = document.querySelectorAll('.plan-cta-button');
+        
+        ctaButtons.forEach(button => {
+            // افکت هنگام هاور
+            button.addEventListener('mouseenter', function() {
+                this.style.animation = 'none';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.animation = 'pulse-glow 2s infinite';
+            });
+            
+            // کلیک روی دکمه
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                // اضافه کردن افکت کلیک
+                this.classList.add('clicked');
+                setTimeout(() => {
+                    window.location.href = '/call';
+                }, 300);
+            });
+        });
+    });
+
+
+</script>
+
+{% endblock content %}

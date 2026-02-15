@@ -1,0 +1,52 @@
+{% load render_partial %}
+<div class="footer1 mt-80 md:mt-40 sm:mt-40">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="logo">
+                    <a href="{% url 'main:index' %}"> <img alt='اوگو فوتر رنک مگ' style='width: 70px;' src="{{media_url}}img/mag-logo.png"></a>
+                </div>
+                <div class="heading1 mt-16">
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-50 sm:mb-30 sm:mt-30">
+                <div class="footer-list1 mr-80 md:mr-0 sm:mr-0">
+                    <div style='font-weight:900; '>دسته بندی ها</div>
+                    <ul>
+                        {% render_partial 'mag:top_title' %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-list1 mr-50 md:mr-0 sm:mr-0 mb-50 sm:mb-30">
+                    <div style='font-weight:900; '>لینک ها</div>
+                  <ul>
+   
+  <li><a href="/mag/seo/what-is-seo">سئو چیست به زبان ساده </a></li>
+  
+</ul>
+
+
+                </div>
+            </div>
+
+          
+        </div>
+
+        <div class="coppyrihgt1">
+            <div class="row coppyrihgt-border">
+                <div class="col-md-6">
+                   <p class="coppyrihgt"> کلیه حقوق این سایت متعلق به وبسایت رنک صفر می‌باشد.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="conditions">
+                        <span> سیاست حفظ حریم خصوصی </span>
+                        <span> شرایط و ضوابط </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

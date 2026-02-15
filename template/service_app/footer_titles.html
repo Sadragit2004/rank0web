@@ -1,0 +1,5 @@
+{% for name in services %}
+    <li>
+        <a style="color:#333;" href="{% url 'service:www' slug=name.slug %}">{{ name.title }}</a>
+    </li>
+{% endfor %}

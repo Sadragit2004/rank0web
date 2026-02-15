@@ -1,0 +1,1004 @@
+{% extends "mag_template.html" %}
+{% load static %}
+{% load render_partial %}
+
+
+{% block meta1 %}
+
+
+<title>{{ meta.page_title }}</title>
+<meta name="description" content="{{ meta.description }}"/>
+<meta name="robots" content="{% if meta.index %}index, follow{% else %}noindex, nofollow{% endif %}"/>
+<meta property="og:locale" content="fa_IR" />
+<meta property="og:type" content="{{ meta.og_type|default:'website' }}" />
+<meta property="og:title" content="{{ meta.og_title }}" />
+<meta property="og:description" content="{{ meta.og_description }}" />
+<meta property="og:site_name" content="{{ meta.site_name }}" />
+<meta property="og:image" content="{{ meta.og_image }}" />
+<meta property="og:image:alt" content="{{ meta.alt }}" />
+<meta property="article:published_time" content="{{ meta.created_at|date:'c' }}" />
+<meta property="article:modified_time" content="{{ meta.updated_at|date:'c' }}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ meta.og_title }}" />
+<meta name="twitter:description" content="{{ meta.og_description }}" />
+<meta name="twitter:image" content="{{ meta.og_image }}" />
+    <link rel="canonical" href="{{ request.build_absolute_uri }}"/>
+
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ request.build_absolute_uri }}"
+      },
+      "headline": "{{ meta.title }}",
+      "description": "{{ meta.description }}",
+      "image": {
+        "@type": "ImageObject",
+        "url": "{{ meta.og_image }}",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Person",
+        "name": "{{mag.author.full_name}}"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ meta.site_name }}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ meta.logo }}",
+          "width": 600,
+          "height": 60
+        }
+      },
+      "datePublished": "{{ mag.create_at }}",
+      "dateModified": "{{ mag.update_at }}"
+    }
+    </script>
+
+
+
+{% endblock meta1 %}
+
+
+{% block content %}
+
+{% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'path/to/your/style.css' %}">
+
+    <style>
+      /* --- General Resets & Basic Styles --- */
+
+  /* --- General Resets & Basic Styles --- */
+  :root {
+    --primary-color: #007bff;
+    --dark-color: #1a202c;
+    --text-color: #333;
+    --light-gray: #f7f7f7;
+    --border-color: #e2e8f0;
+    --body-font: 'Vazirmatn', sans-serif;
+    --reading-width: 800px;
+    --header-height: 450px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--body-font);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--dark-color);
+  }
+
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  a:hover {
+    color: #0056b3;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* --- Hero Section --- */
+  .post-hero {
+    position: relative;
+    height: var(--header-height);
+    display: flex;
+    align-items: flex-start;
+    /* Aligns content to the top */
+    justify-content: flex-end;
+    /* Aligns content to the right */
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .hero-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.05);
+    transition: transform 6s ease-out;
+  }
+
+  .post-hero:hover .hero-background-image {
+    transform: scale(1);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+    z-index: 1;
+  }
+
+  .hero-title-box {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Darker glass effect */
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    max-width: 50%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  h1.post-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-direction: column;
+    /* Stack items vertically */
+    align-items: flex-start;
+    gap: 0.75rem;
+    /* Reduced gap */
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    margin-bottom: 1rem;
+    /* Space before social links */
+  }
+
+  .post-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero-social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    /* Separator line */
+  }
+
+  .hero-social-links a {
+    color: white;
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+  }
+
+  .hero-social-links a:hover {
+    transform: scale(1.1);
+  }
+
+  /* --- Main Content Layout --- */
+  .post-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .post-layout {
+    display: grid;
+    grid-template-columns: 60px 1fr 240px;
+    gap: 2rem;
+  }
+
+  /* --- Sticky Sidebars (PC) --- */
+  .sticky-social-sidebar,
+  .sticky-toc-sidebar {
+    position: sticky;
+    top: 2rem;
+    /* Added top margin */
+    align-self: start;
+    height: calc(100vh - 4rem);
+  }
+
+  .sticky-social-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 2rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .sticky-social-sidebar.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .sticky-social-sidebar a {
+    font-size: 1.1rem;
+    color: #888;
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .sticky-social-sidebar a:hover {
+    background-color: var(--light-gray);
+    color: var(--primary-color);
+  }
+
+  .toc-desktop {
+    padding: 1.5rem;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+
+  .toc-desktop h4 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+  }
+
+  .toc-desktop nav ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .toc-desktop nav li a {
+    display: block;
+    padding: 0.5rem 0;
+    color: #555;
+    border-right: 3px solid transparent;
+    padding-right: 1rem;
+    white-space: nowrap;
+    /* Prevent wrapping */
+    overflow: hidden;
+    /* Hide overflow */
+    text-overflow: ellipsis;
+    /* Add ... for overflow */
+    transition: all 0.3s;
+  }
+
+  .toc-desktop nav li a:hover {
+    color: var(--primary-color);
+    background-color: #e9ecef;
+  }
+
+  .toc-desktop nav li a.active {
+    color: var(--primary-color);
+    font-weight: 700;
+    border-right-color: var(--primary-color);
+  }
+
+  .toc-desktop nav li.level-h3 a {
+    padding-right: 2rem;
+  }
+
+  /* --- Article Content (No changes needed) --- */
+  .post-content {
+    max-width: var(--reading-width);
+    margin: 0 auto;
+  }
+
+  .post-summary {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #555;
+    background-color: var(--light-gray);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-right: 5px solid var(--primary-color);
+    margin-bottom: 2.5rem;
+  }
+
+  .content-body h2,
+  .content-body h3 {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .content-body p {
+    margin-bottom: 1.5rem;
+  }
+
+  .content-body img {
+    border-radius: 8px;
+    margin: 2rem 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  /* --- Note Box, Post Footer, Comments (No changes needed) --- */
+  .note-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    background-color: #e7f3ff;
+    border: 1px solid #b3d7ff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .note-icon {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    padding-top: 5px;
+  }
+
+  .note-content h4 {
+    margin: 0 0 0.5rem 0;
+    color: #0056b3;
+  }
+
+  .note-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .post-footer {
+    max-width: var(--reading-width);
+    margin: 4rem auto 0;
+  }
+
+  .tags-area {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .tags-area a {
+    font-size: 0.85rem;
+    background-color: var(--light-gray);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    color: #555;
+  }
+
+  .tags-area a:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .faq-section,
+  .toc-mobile {
+    margin-top: 3rem;
+  }
+
+  .accordion {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+
+  .accordion-button,
+  .toc-mobile-button {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: var(--body-font);
+    background-color: var(--light-gray);
+    border: none;
+    text-align: right;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .accordion-content,
+  .toc-mobile-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: white;
+  }
+
+  .accordion-content p {
+    padding: 1.5rem;
+    margin: 0;
+  }
+
+  .toc-mobile-content #toc-mobile-list {
+    padding: 1rem;
+  }
+
+  .accordion-button .icon,
+  .toc-mobile-button .icon {
+    width: 1rem;
+    height: 1rem;
+    border-right: 2px solid var(--text-color);
+    border-bottom: 2px solid var(--text-color);
+    transform: rotate(45deg);
+    transition: transform 0.3s;
+  }
+
+  .accordion-button[aria-expanded="true"] .icon,
+  .toc-mobile-button[aria-expanded="true"] .icon {
+    transform: rotate(-135deg);
+  }
+
+  .comments-section {
+    margin-top: 3rem;
+  }
+
+  .comments-section h2,
+  .comment-form-container h3,
+  .faq-section h2 {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .comment-box {
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .comment-box.reply {
+    margin-right: 3rem;
+    margin-top: 1rem;
+    background-color: var(--light-gray);
+  }
+
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .comment-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .comment-author.admin {
+    color: var(--primary-color);
+  }
+
+  .comment-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .reply-btn {
+    color: var(--primary-color);
+    font-weight: 500;
+  }
+
+  .comment-body {
+    margin-top: 1rem;
+  }
+
+  .comment-form-container {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--light-gray);
+    border-radius: 8px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-row input {
+    width: 100%;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-family: var(--body-font);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+  }
+
+  textarea {
+    margin-bottom: 1.5rem;
+  }
+
+  .submit-btn {
+    padding: 0.8rem 2rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: var(--body-font);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .reply-info {
+    margin-bottom: 1rem;
+    background: #cce5ff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .reply-info button {
+    background: none;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+  }
+
+  .back-to-top {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+    place-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  .back-to-top.show {
+    display: grid;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- Responsive Design --- */
+  @media (max-width: 1024px) {
+    .post-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .sticky-social-sidebar,
+    .sticky-toc-sidebar {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      --header-height: 400px;
+    }
+
+    .post-hero {
+      align-items: flex-end;
+      /* Puts content at the bottom */
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .hero-title-box {
+      max-width: 95%;
+      width: 100%;
+      padding: 1rem;
+    }
+
+    h1.post-title {
+      font-size: 1.5rem;
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .comment-box.reply {
+      margin-right: 1.5rem;
+    }
+  }
+
+  .toc-mobile {
+    display: none;
+  }
+
+  @media (max-width: 1024px) {
+    .toc-mobile {
+      display: block;
+    }
+  }
+
+</style>
+
+
+
+ <header class="post-hero" id="post-hero">
+  <div class="hero-background-image" style="background-image: url('{{ media_url }}{{ mag.image_name }}');"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-title-box">
+    <h1 class="post-title">{{ mag.title }}</h1>
+    <div class="post-meta">
+      <span><i class="fa-solid fa-user-pen"></i> {{ mag.author.full_name }}</span>
+      <span><i class="fa-solid fa-calendar-days"></i> {{ mag.created_at|date:"d F Y" }}</span>
+    </div>
+
+    <div class="hero-social-links" id="hero-social-links">
+      {% render_partial 'company:show_media' %}
+    </div>
+  </div>
+</header>
+    <main class="post-container">
+        
+        <div class="post-layout">
+            
+            <aside class="sticky-social-sidebar" id="sticky-social-sidebar">
+                 </aside>
+
+            <article class="post-content" id="post-content">
+                
+                <p class="post-summary">{{ mag.summery_text }}</p>
+
+                <div class="toc-mobile">
+                    <button class="toc-mobile-button">
+                        <i class="fa-solid fa-bars"></i> فهرست مطالب
+                        <span class="icon"></span>
+                    </button>
+                    <div class="toc-mobile-content">
+                        <div id="toc-mobile-list"></div>
+                    </div>
+                </div>
+
+                <div class="content-body">
+                    {% autoescape off %}
+                    {{ mag.description }}
+                    
+                    <div class="note-box">
+                        <div class="note-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                        <div class="note-content">
+                            <h4>نکته مهم</h4>
+                            <p>این یک باکس برای نمایش نکات کلیدی و مهم است. می‌توانید از این ساختار در ویرایشگر متن خود برای برجسته کردن بخش‌های خاصی از محتوا استفاده کنید.</p>
+                        </div>
+                    </div>
+
+                    {% endautoescape %}
+                </div>
+
+            </article>
+
+            <aside class="sticky-toc-sidebar">
+                <div class="toc-desktop" id="toc-desktop">
+                    <h4><i class="fa-solid fa-list-ul"></i> فهرست مطالب</h4>
+                    <nav id="toc-nav"></nav>
+                </div>
+            </aside>
+
+        </div>
+
+        <div class="post-footer">
+            <div class="tags-area">
+                <strong><i class="fa-solid fa-tags"></i> برچسب‌ها:</strong>
+                <a href="/tabriz-seo">خدمات سئو در تبریز</a>
+            </div>
+
+            {% if mag.mag_faqs.all %}
+            <div class="faq-section">
+                <h2>سوالات متداول</h2>
+                <div class="accordion">
+                    {% for faq in mag.mag_faqs.all %}
+                    <div class="accordion-item">
+                        <button class="accordion-button" aria-expanded="false">
+                            <span class="accordion-title">{{ faq.question }}</span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>{{ faq.answer }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="comments-section">
+                <h2>نظرات ({{ comments|length }})</h2>
+                
+                {% for comment in comments %}
+                <div class="comment-box" id="comment-{{ comment.id }}">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <i class="fa-solid fa-user-circle"></i>
+                            <span>{{ comment.author }}</span>
+                        </div>
+                        <div class="comment-meta">
+                            <span class="comment-date">{{ comment.created_at|date:"Y/m/d" }}</span>
+                            <a href="#comment-form" class="reply-btn" onclick="setReply('{{ comment.id }}')">
+                                <i class="fa-solid fa-reply"></i> پاسخ
+                            </a>
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        <p>{{ comment.text }}</p>
+                    </div>
+
+                    {% for reply in comment.replies.all %}
+                    <div class="comment-box reply">
+                         <div class="comment-header">
+                            <div class="comment-author admin">
+                                <i class="fa-solid fa-user-shield"></i>
+                                <span>مدیر سایت</span>
+                            </div>
+                            <div class="comment-meta">
+                                <span class="comment-date">{{ reply.created_at|date:"Y/m/d" }}</span>
+                            </div>
+                        </div>
+                        <div class="comment-body">
+                            <p>{{ reply.text }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="comment-form-container" id="comment-form">
+                <h3>نظر خود را بنویسید</h3>
+                <form action="{% url 'mag:show_detail_group' group_slug=mag.group.slug slug=mag.slug %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" id="parent_id_input">
+                    <div class="reply-info" id="reply-info" style="display: none;">
+                        <span>در حال پاسخ به: <b id="reply-to-name"></b></span>
+                        <button type="button" onclick="cancelReply()">لغو پاسخ</button>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="نام شما *" required>
+                        <input type="email" name="email" placeholder="ایمیل شما *" required>
+                    </div>
+                    <textarea name="text" rows="6" placeholder="پیام شما *" required></textarea>
+                    <button type="submit" class="submit-btn">ارسال نظر</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+    <button class="back-to-top" id="back-to-top" title="بازگشت به بالا">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+
+    const postContent = document.getElementById('post-content');
+    const tocNav = document.getElementById('toc-nav');
+    const tocMobileList = document.getElementById('toc-mobile-list');
+    const headings = postContent.querySelectorAll('.content-body h2, .content-body h3');
+    
+    // 1. Generate Table of Contents
+    if (headings.length > 0 && (tocNav || tocMobileList)) {
+        const tocListDesktop = document.createElement('ul');
+        const tocListMobile = document.createElement('ul');
+
+        headings.forEach((heading, index) => {
+            const id = 'heading-' + index;
+            heading.id = id;
+
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            
+            link.href = '#' + id;
+            link.textContent = heading.textContent;
+            
+            if(heading.tagName === 'H3') {
+                listItem.classList.add('level-h3');
+            }
+
+            listItem.appendChild(link);
+            tocListDesktop.appendChild(listItem);
+            tocListMobile.appendChild(listItem.cloneNode(true)); // کلون کردن برای نسخه موبایل
+        });
+
+        if (tocNav) tocNav.appendChild(tocListDesktop);
+        if (tocMobileList) tocMobileList.appendChild(tocListMobile.cloneNode(true));
+    } else {
+        // اگر عنوانی وجود نداشت، بخش فهرست مطالب را مخفی کن
+        if(document.getElementById('toc-desktop')) document.getElementById('toc-desktop').style.display = 'none';
+        if(document.querySelector('.toc-mobile')) document.querySelector('.toc-mobile').style.display = 'none';
+    }
+
+    // 2. Accordion Functionality (for FAQ and Mobile TOC)
+    const accordionButtons = document.querySelectorAll('.accordion-button, .toc-mobile-button');
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !isExpanded);
+            const content = button.nextElementSibling;
+            if (!isExpanded) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                content.style.maxHeight = '0';
+            }
+        });
+    });
+
+    // 3. Scroll-based interactions
+    const heroSection = document.getElementById('post-hero');
+    const stickySocial = document.getElementById('sticky-social-sidebar');
+    const heroSocialLinks = document.getElementById('hero-social-links');
+    const backToTopBtn = document.getElementById('back-to-top');
+    const tocLinks = document.querySelectorAll('#toc-nav a');
+
+    // کپی کردن لینک‌های سوشیال به سایدبار ثابت
+    if (stickySocial && heroSocialLinks) {
+        stickySocial.innerHTML = heroSocialLinks.innerHTML;
+    }
+    
+    // Observer for active heading in TOC
+    const observerOptions = { rootMargin: '-50px 0px -50% 0px' };
+    const headingObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const id = entry.target.getAttribute('id');
+            const link = document.querySelector(`#toc-nav a[href="#${id}"]`);
+            if (link) {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            }
+        });
+    }, observerOptions);
+
+    headings.forEach(heading => headingObserver.observe(heading));
+    
+    // Handle visibility of sticky elements on scroll
+    window.addEventListener('scroll', () => {
+        const heroBottom = heroSection.getBoundingClientRect().bottom;
+        
+        // Show/hide sticky social bar
+        if (stickySocial) {
+            if (heroBottom < 70) { // 70px is top offset
+                stickySocial.classList.add('visible');
+            } else {
+                stickySocial.classList.remove('visible');
+            }
+        }
+
+        // Show/hide back-to-top button
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+
+    // Back to top button click
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+});
+
+// 4. Comment Reply Functionality
+const parentIdInput = document.getElementById('parent_id_input');
+const replyInfo = document.getElementById('reply-info');
+const replyToName = document.getElementById('reply-to-name');
+const commentForm = document.getElementById('comment-form');
+
+function setReply(commentId) {
+    const authorName = document.querySelector(`#comment-${commentId} .comment-author span`).textContent;
+    parentIdInput.value = commentId;
+    replyToName.textContent = authorName;
+    replyInfo.style.display = 'flex';
+    commentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function cancelReply() {
+    parentIdInput.value = '';
+    replyInfo.style.display = 'none';
+}
+    </script>
+{% endblock content %}

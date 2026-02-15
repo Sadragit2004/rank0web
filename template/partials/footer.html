@@ -1,0 +1,159 @@
+
+{% load render_partial %}
+
+<style>
+   
+    .site-footer {
+        background: #ffffff;
+        padding: 60px 0 20px;
+        font-size: 15px;
+        line-height: 24px;
+        color: #555;
+        direction: rtl;
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid #e9e9e9;
+    }
+
+    /* ===== بخش انیمیشن پس‌زمینه (بدون تغییر) ===== */
+    .circles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; margin: 0; padding: 0; }
+    .circles li { position: absolute; display: block; list-style: none; width: 20px; height: 20px; background: rgba(78, 115, 223, 0.15); animation: animate-up 25s linear infinite; bottom: -150px; }
+    .circles li:nth-child(1){ left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+    .circles li:nth-child(2){ left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+    .circles li:nth-child(3){ left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+    .circles li:nth-child(4){ left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+    .circles li:nth-child(5){ left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+    .circles li:nth-child(6){ left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+    .circles li:nth-child(7){ left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+    .circles li:nth-child(8){ left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+    .circles li:nth-child(9){ left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+    .circles li:nth-child(10){ left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+    @keyframes animate-up { 0%{ transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; } 100%{ transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; } }
+
+    .site-footer .container { position: relative; z-index: 2; }
+    .site-footer #logo-footer { filter: none !important; opacity: 1 !important; transform: none !important; }
+    .site-footer .footer-about p.about-text { text-align: justify; margin: 20px 0; color: #333; }
+    .site-footer h6.footer-title { color: #111; font-size: 18px; font-weight: 700; margin-bottom: 25px; position: relative; padding-bottom: 10px; }
+    .site-footer h6.footer-title::after { content: ''; position: absolute; right: 0; bottom: 0; width: 40px; height: 2px; background: #4e73df; }
+
+    .footer-links ul { padding-right: 0; list-style: none; }
+    .footer-links ul li a { color: #555; transition: all 0.3s ease; text-decoration: none; }
+    .footer-links ul li a:hover { color: #4e73df; padding-right: 5px; }
+
+    /* ===== استایل جدید برای تک‌خطی کردن خدمات ===== */
+    .services-links ul li {
+        white-space: nowrap; /* جلوگیری از شکستن خط و دو سطری شدن */
+    }
+
+    .newsletter-form input[type="email"] { background-color: #f4f4f4; border: 1px solid #ddd; color: #333; }
+    .newsletter-form button { background-color: #4e73df; }
+    .newsletter-form button:hover { background-color: #3b5ac4; }
+    .footer-bottom-bar { border-top: 1px solid #e9e9e9; color: #777; }
+    .social-icons li a { background-color: #f0f0f0; color: #555; }
+    .social-icons li a:hover { background-color: #4e73df; color: #fff; }
+
+    /* کدهای استایل عمومی و ریسپانسیو (بدون تغییر) */
+    .contact-info { list-style: none; padding-right: 0; margin-top: 20px; }
+    .contact-info li { margin-bottom: 10px; direction: ltr; text-align: right; }
+    .contact-info li i { color: #4e73df; margin-right: 10px; }
+    .newsletter-form .form-group { position: relative; }
+    .newsletter-form input[type="email"] { width: 100%; padding: 12px 15px; border-radius: 5px; height: 50px; }
+    .newsletter-form input[type="email"]::placeholder { color: #888; }
+    .newsletter-form button { position: absolute; left: 5px; top: 5px; bottom: 5px; color: #fff; border: none; padding: 0 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; }
+    .footer-bottom-bar { padding-top: 25px; margin-top: 40px; }
+    .copyright-text { text-align: right; }
+    .social-icons { list-style: none; padding: 0; margin: 0; text-align: left; }
+    .social-icons li { display: inline-block; margin-right: 10px; }
+    .social-icons li a { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 16px; transition: all 0.3s ease; text-decoration: none; }
+    .social-icons li a:hover { transform: translateY(-3px); }
+    @media (max-width: 991px) {
+        .site-footer [class^="col-"] { margin-bottom: 30px; }
+        [class*="offset-lg-"] { margin-right: 0; }
+    }
+    @media (max-width: 767px) {
+        .site-footer { padding: 40px 0; text-align: center; }
+        .site-footer .footer-about, .site-footer .footer-links, .site-footer .newsletter-form { text-align: center; }
+        .site-footer h6.footer-title::after { right: 50%; transform: translateX(50%); }
+        .contact-info li { direction: rtl; text-align: center; }
+        .newsletter-form button { position: static; width: 100%; margin-top: 10px; height: 50px; }
+        .footer-bottom-bar { text-align: center; }
+        .copyright-text, .social-icons { text-align: center; width: 100%; }
+        .social-icons { margin-top: 20px; }
+    }
+</style>
+
+<footer class="site-footer">
+    <ul class="circles">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    </ul>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12">
+                <div class="footer-about">
+                    <figure>
+                        <img id="logo-footer"
+                                src="/media/img/rank-new.png"
+                                alt="لوگو رنک صفر"
+                                style="max-width: 150px; height: auto; margin-bottom: 15px;">
+                    </figure>
+                    <p class="about-text">
+                        رنک صفر با بهره‌گیری از جدیدترین تکنولوژی‌های طراحی وب و بهینه‌سازی موتورهای جستجو (SEO)، کسب‌وکار شما را به صدر نتایج گوگل می‌رساند. ما با تکیه بر تجربه، خلاقیت و تحلیل‌های دقیق، وب‌سایتی حرفه‌ای و هدفمند برای شما می‌سازیم تا در فضای دیجیتال بدرخشید.
+                    </p>
+                    <ul class="contact-info">
+                        <li>0930-908-7909 <i class="fas fa-mobile-alt"></i></li>
+                       <li>
+  <a href="mailto:info@rank0.ir" class="text-blue-600 hover:underline">
+    info@rank0.ir <i class="fas fa-mobile-alt"></i>
+  </a>
+</li>
+
+                        <li>0914-659-7108 <i class="fas fa-mobile-alt"></i></li>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+  <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+</svg>
+ <span style="margin-right: 6px; font-size:14px;">تبریز , چهاراه منصور  مجتمع تجاری اطلس طبقه منفی یک پلاک 8 </span>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 offset-lg-1 col-md-6">
+                <div class="footer-links services-links">
+                    <h6 class="footer-title">خدمات ما</h6>
+                    <ul>
+                        {% render_partial 'service:titles_footer' %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="newsletter-form">
+                    <h6 class="footer-title">عضویت در خبرنامه</h6>
+                    <p>برای دریافت آخرین به‌روزرسانی‌ها و پیشنهادات ویژه، ایمیل خود را وارد کنید.</p>
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <input type="email" name="newsletter-email" placeholder="آدرس ایمیل شما" required>
+                            <button type="submit">عضویت</button>
+                        </div>
+                    </form>
+                    <div style="margin-top: 30px; text-align: center;">
+                        <a href="/about-us">
+                            <img src="/media/img/enamad.png" alt="درباره ما" style="max-width: 120px; height: auto; border-radius: 5px; opacity: 0.8; transition: opacity 0.3s ease;">
+                        </a>
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row footer-bottom-bar">
+            <div class="col-md-8 col-sm-12">
+                <p class="copyright-text">کلیه حقوق این وب‌سایت متعلق به رنک صفر © {% now "Y" %} می‌باشد.</p>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <ul class="social-icons">
+                    {% render_partial 'company:show_media' %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

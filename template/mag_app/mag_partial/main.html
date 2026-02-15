@@ -1,0 +1,212 @@
+{% extends "mag_template.html" %}
+
+{% load render_partial %}
+
+
+{% block meta1 %}
+
+
+<title>{{ meta.page_title }}</title>
+<meta name="description" content="{{ meta.description }}"/>
+<meta name="robots" content="{% if meta.index %}index, follow{% else %}noindex, nofollow{% endif %}"/>
+<meta property="og:locale" content="fa_IR" />
+<meta property="og:type" content="{{ meta.og_type|default:'website' }}" />
+<meta property="og:title" content="{{ meta.og_title }}" />
+<meta property="og:description" content="{{ meta.og_description }}" />
+<meta property="og:site_name" content="{{ meta.site_name }}" />
+<meta property="og:image" content="{{ meta.og_image }}" />
+<meta property="og:image:alt" content="{{ meta.alt }}" />
+<meta property="article:published_time" content="{{ meta.created_at|date:'c' }}" />
+<meta property="article:modified_time" content="{{ meta.updated_at|date:'c' }}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ meta.og_title }}" />
+<meta name="twitter:description" content="{{ meta.og_description }}" />
+<meta name="twitter:image" content="{{ meta.og_image }}" />
+    <link rel="canonical" href="{{ request.build_absolute_uri }}"/>
+
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ request.build_absolute_uri }}"
+      },
+      "headline": "{{ meta.title }}",
+      "description": "{{ meta.description }}",
+      "image": {
+        "@type": "ImageObject",
+        "url": "{{ meta.image }}",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Person",
+        "name": "{{ meta.author }}"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ meta.site_name }}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ meta.logo }}",
+          "width": 600,
+          "height": 60
+        }
+      },
+      "datePublished": "{{ meta.date_published }}",
+      "dateModified": "{{ meta.date_modified }}"
+    }
+    </script>
+
+
+{% endblock meta1 %}
+
+{% block content %}
+
+
+<div class="paginacontainer">
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+</div>
+
+<!--=====progress END=======-->
+
+<!--=====PRELOADER START=======-->
+
+
+
+<!--=====PRELOADER START=======-->
+
+<!-- search popup start -->
+<div class="search__popup">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-12">
+                <div class="search__wrapper">
+                    <div class="search__top d-flex justify-content-between align-items-center">
+                        <div class="search__logo">
+                            <a href="{% url 'main:index' %}">
+                            {% render_partial 'company:logo' %}
+                            </a>
+                        </div>
+                        <div class="search__close">
+                           <button type="button" class="search__close-btn search-close-btn" aria-label="Close search">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M17 1L1 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M1 1L17 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+</button>
+
+                        </div>
+                    </div>
+                  <div class="search__form">
+    <form action="{% url 'mag:search' %}">
+        <div class="search__input">
+            <input name="q" class="search-input-field" type="text" placeholder="برای جستجو اینجا را تایپ کنید..." required />
+            <span class="search-focus-border"></span>
+            <button type="submit" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M9.55 18.1C14.272 18.1 18.1 14.272 18.1 9.55C18.1 4.82797 14.272 1 9.55 1C4.82797 1 1 4.82797 1 9.55C1 14.272 4.82797 18.1 9.55 18.1Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M19.0002 19.0002L17.2002 17.2002" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </form>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- search popup end -->
+
+<!--=====HEADER START=======-->
+
+
+<!--=====Mobile header end=======-->
+
+<!--===== HERO AREA START=======-->
+
+{% render_partial 'mag:slider' %}
+
+<!--===== HERO AREA END=======-->
+
+<!--===== BLOG AREA START=======-->
+
+<div class="blog1 sp bg1 _relative">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% render_partial 'mag:mags' %}
+
+            </div>
+
+            <div class="col-lg-4">
+                <div class="blog1-sidebar-area mr-30 sm:mr-0 md:mr-0 md:mt-30 sm:mt-30">
+                    <div class="sidebar-widget_1 _search-area1">
+                        <div>جستجو</div>
+                        <form  action="{% url 'mag:search' %}">
+                            <input name='q' type="text" placeholder="میخوای چی بدونی..؟" />
+                        </form>
+                    </div>
+                  {% render_partial 'mag:show-best-aut' %}
+                  {% render_partial 'mag:explorer' %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--===== BLOG AREA END=======-->
+
+<!--===== BLOG CETEGORYS START=======-->
+{% render_partial 'mag:top-group' %}
+
+<!--===== BLOG CETEGORYS END=======-->
+
+<!--===== CTA AREA START=======-->
+
+<div class="cta1">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="heading1-w">
+                    <div style='color:#fff; font-weight:900; font-size:25px;'>  هر مهارتی رو دوس داشتی همین الان سرچ کن یادبگیر</div>
+                    <p class="mt-16">بهترین و روان ترین مقالات برنامه نویسی و تولید محتوا رو میتونی اینجا پیدا کنی !</p>
+                    <div class="form-area">
+                        <form action="#">
+                            <input type="email" placeholder="ایمیل خود را وارد کنید" />
+                            <div class="button">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="image text-start sm:text-end md:text-end sm:mt-30 md:mt-30">
+                    <img src="{{media_url}}img/hero/hero1-image.png" alt="عکس قهرمان" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validateSearch() {
+        const input = document.getElementById('searchInput').value.trim();
+        if (input === '') {
+            alert('لطفاً یک عبارت برای جستجو وارد کنید.');
+            return false; // جلوگیری از ارسال فرم
+        }
+        return true; // فرم ارسال می‌شود
+    }
+</script>
+{% endblock content %}

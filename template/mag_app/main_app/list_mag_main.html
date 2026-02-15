@@ -1,0 +1,53 @@
+<div class="blog1-posts-area">
+    <div class="row" id="articles-container">
+        {% for mag in mags %}
+        <div class="col-md-6" data-aos-offset="50" data-aos-duration="400" data-aos-delay="0">
+            <div class="blog1-single-box">
+                <div class="thumbnail image-anime">
+                    <img src="{{ media_url }}{{ mag.image_name }}" alt="{{ mag.title }}" />
+                </div>
+                <div class="heading1">
+                    <div class="social-area">
+                        {% for gr in mag.group.all %}
+                        <span class="social">{{ gr.title }}</span>
+                        {% endfor %}
+                        <span class="time">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-check-fill" viewBox="0 0 16 16">
+                                <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 4.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708" />
+                            </svg>
+                            مطالعه {{ mag.time_read }} دقیقه
+                        </span>
+                    </div>
+                    {% if mag.group %}
+                    <a href="{% url 'mag:show_detail_group' group_slug=mag.group.slug slug=mag.slug %}">
+                        {{ mag.title }}
+                    </a>
+                    {% else %}
+                    {{ mag.title }}
+                    {% endif %}
+                    <p class="mt-16">{{ magsummery_text }}</p>
+                    <div class="author-area">
+                        <div class="author">
+                            <div class="author-tumb">
+                                <img src="{{ media_url }}{{ mag.author.image_name }}" alt="{{ mag.author.full_name }}" />
+                            </div>
+                            <span class="author-text">{{ mag.author.full_name }}</span>
+                        </div>
+                        <div class="date">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
+                                <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5z" />
+                                <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.012-.013.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5M8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="space60"></div>
+    <div class="text-center">
+        <a href='mags' id="load-more-btn" class="btn btn-primary">مشاهده همه مقالات</a>
+    </div>
+</div>

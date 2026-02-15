@@ -1,0 +1,41 @@
+<div class="seo-text-container">
+  {% for seo in text_seo %}
+    <div class="seo-text-block">
+      {% autoescape off %}
+      {{ seo.description }}
+      {% endautoescape %}
+    </div>
+  {% endfor %}
+</div>
+
+
+
+<style>
+    
+  .seo-text-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  direction: rtl;
+  text-align: justify;
+  padding: 30px 15px;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seo-text-block {
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  line-height: 1.9;
+  color: #333;
+  font-size: 15px;
+  max-width: 700px;
+  width: 100%;
+}
+
+
+</style>

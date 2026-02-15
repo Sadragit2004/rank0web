@@ -1,0 +1,155 @@
+{% extends "main_template.html" %}
+{% load render_partial %}
+
+
+{% block meta1 %}
+
+<title>نمونه‌کارهای طراحی سایت و سئو | رنک صفر</title>
+<meta name="description" content="برخی از نمونه‌کارهای حرفه‌ای رنک صفر در زمینه طراحی سایت و سئو برای کسب‌وکارهای مختلف، مخصوصاً در تبریز."/>
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+<meta property="og:title" content="نمونه‌کارهای طراحی سایت و سئو | رنک صفر" />
+<meta property="og:description" content="مشاهده نمونه‌کارهای طراحی سایت، سئو، و بهینه‌سازی اجرا شده توسط تیم رنک صفر با تمرکز بر نیازهای مشتریان." />
+<meta property="og:site_name" content="رنک صفر" />
+<meta property="og:url" content="https://rank0.ir/samples/" />
+<meta property="og:updated_time" content="2025-04-16T12:00:00+00:00" />
+<meta property="og:image" content="https://rank0.ir/media/images/sample/54b672a4-89c7-4c5b-bd21-afb5c26846aadsdsd.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="نمونه‌کارهای طراحی سایت و سئو در تبریز" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="article:published_time" content="2025-04-01T08:00:00+00:00" />
+<meta property="article:modified_time" content="2025-04-16T12:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="نمونه‌کارهای طراحی سایت و سئو | رنک صفر" />
+<meta name="twitter:description" content="برترین نمونه‌کارهای رنک صفر در حوزه طراحی سایت و سئو برای برندهای مختلف." />
+<meta name="twitter:site" content="@ranksefr_com" />
+<meta name="twitter:creator" content="@ranksefr_com" />
+<meta name="twitter:image" content="https://rank0.ir/media/images/sample/54b672a4-89c7-4c5b-bd21-afb5c26846aadsdsd.jpg" />
+<meta name="twitter:label1" content="نویسنده" />
+<meta name="twitter:data1" content="صدرا آبادکار" />
+<meta name="twitter:label2" content="زمان مطالعه" />
+<meta name="twitter:data2" content="۱ دقیقه" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "نمونه‌کارهای طراحی سایت و سئو | رنک صفر",
+  "description": "مشاهده نمونه‌کارهای اجرا شده توسط رنک صفر در زمینه طراحی سایت و سئو برای کسب‌وکارهای مختلف.",
+  "url": "https://rank0.ir/samples/",
+  "inLanguage": "fa",
+  "datePublished": "2025-04-01T08:00:00+00:00",
+  "dateModified": "2025-04-16T12:00:00+00:00",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "رنک صفر",
+    "url": "https://rank0.ir"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "صدرا آبادکار"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://rank0.ir/media/images/sample/54b672a4-89c7-4c5b-bd21-afb5c26846aadsdsd.jpg",
+    "width": "1200",
+    "height": "630",
+    "caption": "نمونه‌کارهای طراحی سایت و سئو در تبریز"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "رنک صفر",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://rank0.ir/media/images/logo/8ab41a55-b1cd-421a-b6a2-d92ae9a3806dggggg.png",
+      "width": "600",
+      "height": "60"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://rank0.ir/samples/"
+  }
+}
+</script>
+
+
+
+
+
+{% endblock meta1 %}
+
+
+{% block content %}
+
+<div class="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- Page Header Box Start -->
+          <div class="page-header-box">
+            <h1 class="text-anime-style-3">نمونه کار های {% render_partial 'company:name' %}</h1>
+            <nav class="wow fadeInUp" data-wow-delay="0.25s">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'main:index' %}">خانه</a>
+                </li>
+                <li aria-current="page" class="breadcrumb-item active">
+                  نمونه کارها
+                </li>
+              </ol>
+            </nav>
+          </div>
+          <!-- Page Header Box End -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page Header End -->
+  <!-- Projects Page Start -->
+  <div class="our-projects">
+    <div class="container">
+      <div class="row">
+      {% render_partial 'sample:show_groups' %}
+        <div class="col-lg-12">
+          <!-- Project Item Box start -->
+          <div class="row project-item-boxes">
+
+            {% if samples|length > 0 %}
+
+
+         {% for item in samples %}
+         <div class="col-md-6 project-item-box website graphics">
+            <!-- Works Item Start -->
+            <div class="works-item">
+              <div class="works-image">
+                <figure class="image-anime">
+                  <img alt="{{item.title}}" src="{{media_url}}{{item.image_name}}" />
+                </figure>
+              </div>
+              <div class="works-content">
+                <a href="{% url 'sample:detail_sample' slug=item.slug %}"><h2>{{item.title}}</h2></a>
+                <p>
+               {% autoescape off %} {{item.description}}{% endautoescape %}
+                </p>
+              </div>
+            </div>
+            <!-- Works Item End -->
+          </div>
+         {% endfor %}
+
+         {% else %}
+
+         <div><span style='font-size:25px; font-weight:900; text-align:center;'>هیچ نمونه کاری یافت نشد.</span></div>
+
+            {% endif %}
+
+          </div>
+          <!-- Project Item Box End -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Projects Page End -->
+
+{% endblock content %}

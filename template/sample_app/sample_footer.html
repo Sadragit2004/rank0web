@@ -1,0 +1,5 @@
+
+{% for sample in samples %}
+<li><a style='color:#333;' href="{% url 'sample:detail_sample' slug=sample.slug %}">{{sample.title}}</a></li>
+
+{% endfor %}

@@ -1,0 +1,69 @@
+{% extends "main_template.html" %}
+{% load render_partial %}
+
+{% block content %}
+
+<style>
+  /* استایل دکمه تلفن */
+  .call-button {
+    position: fixed;
+    bottom: 105px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 60px;
+    font-size: 24px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
+  }
+
+  .call-button:hover {
+    transform: scale(1.1); /* بزرگ‌نمایی ملایم هنگام هاور */
+    background-color: #218838; /* تغییر رنگ هنگام هاور */
+  }
+</style>
+
+<!-- پارشیال معرفی اصلی شرکت -->
+{% render_partial 'company:main_one' %}
+
+<!-- پلن‌های پایه -->
+<div id="plan-basic" class="plan-base">
+  {% render_partial 'whyus:show_plan_basic' %}
+</div>
+<div id='sample_main'>
+  {% render_partial 'sample:show_sample' %}
+</div>
+{% render_partial 'company:show_comm' %}
+<!-- خدمات اصلی شرکت -->
+{% render_partial 'service:show_main_service' %}
+ {% render_partial 'company:qustion' %}
+<!-- نمونه‌کارها -->
+
+<!-- چرا ما؟ -->
+
+
+<!-- مقالات جدید -->
+{% render_partial 'mag:MagsViewBlogMain2' %}
+
+<!-- جاوااسکریپت برای اسکرول نرم -->
+<script>
+  // Add smooth scrolling behavior
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+  
+  
+</script>
+
+{% endblock content %}

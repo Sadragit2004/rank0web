@@ -1,0 +1,59 @@
+<div class="col-lg-4">
+  <div class="post-social-links wow fadeInUp" data-wow-delay="0.25s">
+    <h2 class="visually-hidden">شبکه‌های اجتماعی</h2>
+    <ul class="social-links" role="list">
+      {% for social in socials %}
+        <li role="listitem">
+          <a href="{{social.link}}" aria-label="{{social.name_title}}" title="{{social.name_title}}">
+            {% autoescape off %}{{social.svg_link}}{% endautoescape %}
+            <span class="visually-hidden">{{social.name}}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .post-social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .post-social-links svg {
+    all: initial; /* ریست کامل استایل‌ها */
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+  }
+  
+  .post-social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .social-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+  }
+</style>

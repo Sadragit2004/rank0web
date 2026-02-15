@@ -1,0 +1,10 @@
+
+{% for mag in mags %}
+<li>
+    <a style='color:#333;' href="{% url 'mag:show_detail_group' group_slug=mag.group.slug slug=mag.slug %}">
+        {{ mag.title }}
+    </a>
+</li>
+
+
+{% endfor %}

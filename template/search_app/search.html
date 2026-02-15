@@ -1,0 +1,118 @@
+{% extends "main_template.html" %}
+
+{% load humanize %}
+
+{% block content %}
+
+<style>
+    /* styles.css */
+
+
+
+.search-form h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.search-form label {
+    display: block;
+    text-align: right;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.price-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.price-inputs input {
+    width: 40%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: right;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+.price-inputs input:focus {
+    border-color: #007bff;
+}
+
+.price-inputs span {
+    color: #555;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+</style>
+
+<br><br>
+
+<div class="container">
+
+    <form action="" method="post" class="search-form">
+{% csrf_token %}
+        <div class="price-inputs">
+            <input type="number" id="price1" name="price1" placeholder="حداقل قیمت">
+            <span>تا</span>
+            <input type="number" id="price2" name="price2" placeholder="حداکثر قیمت">
+        </div>
+
+        <button type="submit">ارسال</button>
+    </form>
+</div>
+
+<br><br>
+
+<div class="row">
+    {% for plan in plans %}
+        <div class="col-lg-4">
+            <div class="your-choice-item wow fadeInUp" data-wow-delay="0.25s">
+                <div class="your-choice-title">
+                    <h2>{{ plan.title }}</h2>
+                    <a href="">
+                        <img alt="{{ plan.title }}" src="{{ media_url }}{{ plan.image_name }}" />
+                    </a>
+                </div>
+                <ul>
+                    {% for item_p in plan.plan_item.all %}
+                        {% if item_p.is_checked %}
+                            <i style="color:green;" class="bi bi-check2-circle"></i>
+                            <a href="#">{{ item_p.title }}</a><br><br>
+                        {% else %}
+                            <i style="color:red;" class="bi bi-x-circle"></i>
+                            <a href="#">{{ item_p.title }}</a><br><br>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <div class="plan-price">
+                    {{ plan.price|intcomma }} تومان
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

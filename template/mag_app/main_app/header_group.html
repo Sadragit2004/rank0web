@@ -1,0 +1,31 @@
+{% for group in groups %}
+<li class="dropdown-menu-parrent">
+    <a href="{% url 'mag:show-mag' slug=group.slug %}" class="main1">
+        {{ group.title }} <i class="fa-solid fa-angle-down"></i>
+    </a>
+
+    {% if group == advertisement_group %}
+        {% if advertisement_articles %}
+            <ul>
+                {% for mag in advertisement_articles %}
+                    <li>
+                        <a href="{% url 'mag:show_detail_group' group_slug=group.slug slug=mag.slug %}">
+                            {{ mag.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% elif group.parent_of_group.exists %}
+        <ul>
+            {% for child in group.parent_of_group.all %}
+                <li>
+                    <a href="{% url 'mag:show-mag' slug=child.slug %}">
+                        {{ child.title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>
+{% endfor %}

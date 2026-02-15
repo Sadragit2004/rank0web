@@ -1,0 +1,228 @@
+{% load render_partial %}
+<style>
+  .modern-portfolio {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 300px;
+    gap: 20px;
+  }
+
+  .modern-portfolio .work-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .modern-portfolio .work-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .modern-portfolio .work-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .modern-portfolio .work-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .modern-portfolio .work-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 15px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modern-portfolio .work-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .modern-portfolio .work-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .modern-portfolio .work-domain {
+    background: rgba(255,255,255,0.9);
+    color: #333;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: inline-block;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .modern-portfolio .work-domain:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+
+  .modern-portfolio .work-description {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-top: 5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .modern-portfolio .item-large {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+
+  .modern-portfolio .item-small {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .modern-portfolio .centered-last {
+    grid-column: 3 / span 2;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  @media (max-width: 768px) {
+    .modern-portfolio {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 200px;
+    }
+
+    .modern-portfolio .item-large {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    .modern-portfolio .item-small {
+      grid-column: span 1;
+    }
+
+    .modern-portfolio .centered-last {
+      grid-column: 1 / span 2;
+    }
+    
+    .modern-portfolio .work-title {
+      font-size: 14px;
+    }
+    
+    .modern-portfolio .work-domain {
+      font-size: 10px;
+      padding: 2px 6px;
+    }
+  }
+</style>
+
+<section class="modern-portfolio-container" style="padding: 50px 0; background: #fafafa;">
+  <div class="container">
+    <div class="section-title text-center mb-5">
+      <p style='text-align: right;
+  font-size: 18px;
+  font-weight: 700;' class="text-muted">قسمتی از نمونه کار های رنک صفر</p>
+    </div>
+
+    <div class="modern-portfolio">
+      {% with total=samples|length %}
+        {% for sample in samples %}
+          {% if forloop.first %}
+            <div class="work-item item-large">
+              <a href="{% url 'sample:detail_sample' slug=sample.slug %}" 
+                 aria-label="مشاهده جزئیات نمونه کار {{ sample.title }}"
+                 style="font-size:11px; color:#ffff;">
+                <img loading='lazy' src="{{ media_url }}{{ sample.image_name }}" 
+                     alt="{{ sample.title }} - نمونه کار رنک صفر">
+                <div class="work-info">
+                  <div class="work-title-wrapper">
+                    <span class="work-title imp" style="font-size:11px; color:#ffff; font-weight:bold;">
+                      {{ sample.title }}
+                      <span class="sr-only">نمونه کار</span>
+                    </span>
+                    {% if sample.domain %}
+                      <a href="https://{{ sample.domain }}" 
+                         class="work-domain" 
+                         target="_blank" 
+                         rel="nofollow noreferrer noopener"
+                         aria-label="مشاهده وبسایت {{ sample.domain }} (در برگه جدید)"
+                         title="مشاهده وبسایت">
+                        {{ sample.domain }}
+                        <span class="sr-only">(در برگه جدید)</span>
+                      </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% else %}
+            {% with remaining=total|add:'-2' %}
+              {% if forloop.last and remaining|divisibleby:3 == False %}
+                <div class="work-item item-small centered-last">
+              {% else %}
+                <div class="work-item item-small">
+              {% endif %}
+                <a href="{% url 'sample:detail_sample' slug=sample.slug %}" 
+                   aria-label="مشاهده جزئیات نمونه کار {{ sample.title }}">
+                  <img loading='lazy' src="{{ media_url }}{{ sample.image_name }}" 
+                       alt="{{ sample.title }} - نمونه کار رنک صفر">
+                  <div class="work-info">
+                    <div class="work-title-wrapper">
+                      <span class="work-title imp" style="font-size:11px; color: white;">
+                        {{ sample.title }}
+                        <span class="sr-only">نمونه کار</span>
+                      </span>
+                      {% if sample.domain %}
+                        <a href="https://{{ sample.domain }}" 
+                           class="work-domain" 
+                           target="_blank" 
+                           rel="nofollow noreferrer noopener"
+                           aria-label="مشاهده وبسایت {{ sample.domain }} (در برگه جدید)"
+                           title="مشاهده وبسایت">
+                          {{ sample.domain|truncatechars:15 }}
+                          <span class="sr-only">(در برگه جدید)</span>
+                        </a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {% endwith %}
+          {% endif %}
+        {% endfor %}
+      {% endwith %}
+    </div>
+  </div>
+</section>

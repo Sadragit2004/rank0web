@@ -1,0 +1,143 @@
+{% load render_partial %}
+{% load humanize %}
+{% load static %}
+
+<!-- CSS -->
+<link href="{% static 'css/plan.css' %}" rel="stylesheet" />
+
+
+<!-- HTML -->
+<div class="your-choice">
+    <div class="container">
+        <div class="row section-row align-items-center">
+            <div class="col-lg-7 col-md-12">
+                <div class="section-title">
+                    <div style='color:#333;'>{% render_partial 'company:name' %}</div> <br>
+                    <h2 class="pricing-title">پلن های پایه شرکت</h2>
+                </div>
+            </div>
+        </div>
+        
+   
+        
+        <div class="row" id="plans-container">
+            {% for plan in plans %}
+                <div id="coly" class="col-lg-4 plan-box">
+                    <div class="your-choice-item" style="text-align: right;">
+                        {% if plan.is_org %}
+                            <div class="ribbon-svg">
+                                <img width="50%" height="50%" src="{{media_url}}images/labe.svg" alt="Golden Plan" />
+                            </div>
+                        {% endif %}
+
+                        <div class="your-choice-title">
+                            <div style='font-size:22px;' class="h2">{{ plan.title }}</div>
+                            <div style="margin-top: 20px;">
+                                <img width="100%" height="100%" alt="{{ plan.title }}" src="{{ media_url }}{{ plan.image_name }}" style="width: 100%; height: auto; border-radius: 15px;" />
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <ul class="feature-list">
+                                {% for item_p in plan.plan_item.all %}
+                                    <li style='color:#333;' class="feature-list-item {% if forloop.counter > 5 %}hidden-item{% endif %}">
+                                        {% if item_p.is_checked %}
+                                            <i class="check">✔</i>
+                                        {% endif %}
+                                        <span style='color:#333;' class="feature-text">{{ item_p.title }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="toggle-btn" onclick="toggleFeatures(this)">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- بخش قیمت جدید -->
+                        <div class="price-section">
+                            <div class="price-label">هزینه نهایی</div>
+                            <div class="price-main">{{ plan.price | intcomma }} تومان</div>
+                            
+                            <div class="discount-container">
+                                <span class="original-price">{{ plan.original_price | intcomma }} تومان</span>
+                                <span class="discount-badge">10% تخفیف</span>
+                            </div>
+                            
+                            <div class="special-offer">
+                                <i class="fas fa-tag"></i>
+                                <span>پیشنهاد ویژه محدود</span>
+                            </div>
+                        </div>
+
+                        <!-- بخش CTA -->
+                        <div class="plan-cta-container">
+                            <a href="/call" class="plan-cta-button">
+                                <span class="cta-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </span>
+                                <span class="cta-text">مشاوره رایگان</span>
+                                <span class="cta-arrow">
+                                    <i class="fas fa-arrow-left"></i>
+                                </span>
+                            </a>
+                            <div class="cta-hint">
+                                <i class="fas fa-info-circle"></i> همین حالا با ما تماس بگیرید
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% render_partial 'company:qustion' %}
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    function toggleFeatures(button) {
+        const hiddenItems = button.parentNode.querySelectorAll(".hidden-item");
+        const icon = button.querySelector("i");
+
+        hiddenItems.forEach((item) => {
+            if (item.style.display === "none" || item.style.display === "") {
+                item.style.display = "flex";
+                setTimeout(() => {
+                    item.style.opacity = 1;
+                }, 10);
+            } else {
+                item.style.opacity = 0;
+                setTimeout(() => {
+                    item.style.display = "none";
+                }, 300);
+            }
+        });
+
+        button.classList.toggle("active");
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const priceSections = document.querySelectorAll('.price-section');
+        
+        priceSections.forEach(section => {
+            const priceElement = section.querySelector('.price-main');
+            const originalPrice = parseInt(priceElement.textContent.replace(/[^0-9]/g, ''));
+            
+            if (!isNaN(originalPrice)) {
+                const discountPercent = 10; // درصد تخفیف
+                const discountedPrice = originalPrice * (1 - discountPercent/100);
+                
+                // به‌روزرسانی قیمت اصلی
+                section.querySelector('.original-price').textContent = 
+                    originalPrice.toLocaleString() + ' تومان';
+                
+                // به‌روزرسانی قیمت با تخفیف
+                priceElement.textContent = 
+                    Math.round(discountedPrice).toLocaleString() + ' تومان';
+                
+                // به‌روزرسانی درصد تخفیف
+                section.querySelector('.discount-badge').textContent = 
+                    discountPercent + '% تخفیف';
+            }
+        });
+    });
+</script>

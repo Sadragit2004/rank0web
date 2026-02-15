@@ -1,0 +1,130 @@
+<div id="notifier" style="display:none; margin-bottom:10px; font-weight:bold;"></div>
+
+<div class="chat-box" id="messages-container">
+    {% for msg in messages %}
+        <div class="message {% if msg.is_from_admin %}admin{% else %}user{% endif %}">
+            <b>{% if msg.is_from_admin %}ادمین{% else %}کاربر{% endif %}</b> (چت‌روم: {{ msg.chat_room }}):
+            {{ msg.text }}
+        </div>
+    {% empty %}
+        <p>هیچ پیامی وجود ندارد.</p>
+    {% endfor %}
+</div>
+
+<script>
+    const originalTitle = document.title;
+    let notificationInterval = null;
+    let lastUpdateTime = 0;
+    const updateFrequency = 5000; // 10 ثانیه
+
+    // مدیریت چشمک زدن عنوان
+    function startNotificationBlink(type) {
+        stopNotificationBlink();
+        let visible = true;
+        const icons = { 'chatroom': '🔵', 'message': '🟠' };
+
+        notificationInterval = setInterval(() => {
+            document.title = visible ?
+                `${icons[type]} ${type === 'chatroom' ? 'چت روم جدید!' : 'پیام جدید!'}` :
+                originalTitle;
+            visible = !visible;
+        }, 1000);
+    }
+
+    function stopNotificationBlink() {
+        if (notificationInterval) {
+            clearInterval(notificationInterval);
+            notificationInterval = null;
+            document.title = originalTitle;
+        }
+    }
+
+    // نمایش نوتیفیکیشن
+    function showNotification(chatrooms, messages) {
+        const notifier = document.getElementById('notifier');
+
+        if (chatrooms > 0) {
+            notifier.innerHTML = `🧑‍💬 ${chatrooms} چت جدید`;
+            notifier.style.display = 'block';
+            startNotificationBlink('chatroom');
+        }
+        else if (messages > 0) {
+            notifier.innerHTML = `📩 ${messages} پیام جدید`;
+            notifier.style.display = 'block';
+            startNotificationBlink('message');
+        }
+        else {
+            notifier.style.display = 'none';
+            stopNotificationBlink();
+        }
+    }
+
+    // دریافت پیام‌ها با کش کردن
+    async function fetchMessages(forceUpdate = false) {
+        const now = Date.now();
+        if (!forceUpdate && now - lastUpdateTime < updateFrequency) return;
+
+        try {
+            const response = await fetch(`/chat/api/messages/?t=${now}`);
+            const data = await response.json();
+            const container = document.getElementById('messages-container');
+
+            if (data.messages?.length > 0) {
+                container.innerHTML = data.messages.map(msg => `
+                    <div class="message ${msg.is_from_admin ? 'admin' : 'user'}">
+                        <b>${msg.is_from_admin ? 'ادمین' : 'کاربر'}</b>
+                        (چت‌روم: ${msg.chat_room || 'بدون عنوان'}): ${msg.text}
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<p>هیچ پیامی وجود ندارد.</p>';
+            }
+
+            lastUpdateTime = now;
+        } catch (e) {
+            console.error('خطا در دریافت پیام‌ها:', e);
+        }
+    }
+
+    // بررسی وضعیت جدید با هوشمندی
+    async function checkNewChatData(forceUpdate = false) {
+        const now = Date.now();
+        if (!forceUpdate && now - lastUpdateTime < updateFrequency) return;
+
+        try {
+            const response = await fetch(`/chat/api/unseen-data/?t=${now}`);
+            const data = await response.json();
+            showNotification(data.new_chatrooms, data.new_messages);
+            lastUpdateTime = now;
+        } catch (error) {
+            console.error("خطا در دریافت وضعیت چت:", error);
+        }
+    }
+
+    // تابع اصلی برای به‌روزرسانی
+    async function update(force = false) {
+        await Promise.all([
+            fetchMessages(force),
+            checkNewChatData(force)
+        ]);
+    }
+
+    // تنظیم تایمر و مدیریت رویدادها
+    const updateInterval = setInterval(update, updateFrequency);
+
+    // رویدادهای صفحه
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            update(true); // به‌روزرسانی فوری هنگام بازگشت به صفحه
+        }
+    });
+
+    window.addEventListener('focus', () => update(true));
+    window.addEventListener('beforeunload', () => {
+        clearInterval(updateInterval);
+        stopNotificationBlink();
+    });
+
+    // اجرای اولیه
+    update(true);
+</script>

@@ -1,0 +1,35 @@
+{% for mag in mags %}
+<div class="col-md-6" data-aos-offset="50" data-aos-duration="400" data-aos-delay="0">
+    <div class="blog1-single-box">
+        <div class="thumbnail image-anime">
+            <img src="{{ media_url }}{{ mag.image_name }}" alt="{{ mag.title }}" />
+        </div>
+        <div class="heading1">
+            <div class="social-area">
+                {% for gr in mag.group.all %}
+                <span class="social">{{ gr.title }}</span>
+                {% endfor %}
+                <span class="time">
+                    مطالعه {{ mag.time_read }} دقیقه
+                </span>
+            </div>
+            {% if mag.group %}
+            <a href="{% url 'mag:show_detail_group' group_slug=mag.group.slug slug=mag.slug %}">
+                {{ mag.title }}
+            </a>
+            {% else %}
+            {{ mag.title }}
+            {% endif %}
+            <p class="mt-16">{{ mag.summery_text }}</p>
+            <div class="author-area">
+                <div class="author">
+                    <div class="author-tumb">
+                        <img src="{{ media_url }}{{ mag.author.image_name }}" alt="{{ mag.author.full_name }}" />
+                    </div>
+                    <span class="author-text">{{ mag.author.full_name }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

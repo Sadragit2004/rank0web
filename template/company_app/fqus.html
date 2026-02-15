@@ -1,0 +1,213 @@
+{% load render_partial %}
+
+<style>
+  .faq-section {
+    padding: 60px 0;
+    background-color: #f9f9f9;
+    font-family: 'Vazir', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .faq-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .faq-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .faq-header h2 {
+    font-size: 2.2rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .faq-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: #e74c3c; /* تغییر رنگ به قرمز */
+  }
+  
+  .faq-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  .faq-accordion {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .faq-image {
+    flex: 0 0 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .faq-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .accordion-item {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .accordion-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .accordion-button {
+    width: 100%;
+    padding: 18px 25px;
+    text-align: right;
+    border: none;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  
+  .accordion-button:not(.collapsed) {
+    background-color: #007bff !important; /* رنگ قرمز پررنگ */
+    color: #fff; /* متن سفید */
+  }
+  
+  .accordion-button::after {
+    content: '+';
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    margin-left: 15px;
+    color: #333;
+  }
+  
+  .accordion-button:not(.collapsed)::after {
+    content: '-';
+    color: #fff; /* علامت منفی سفید */
+  }
+  
+  .accordion-body {
+    padding: 0 25px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    text-align: right;
+    line-height: 1.8;
+    color: #555;
+    background-color: white;
+  }
+  
+  .accordion-button:not(.collapsed) + .accordion-body {
+    padding: 20px 25px;
+    max-height: 500px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 992px) {
+    .faq-content {
+      flex-direction: column;
+    }
+    
+    .faq-image {
+      display: none;
+    }
+    
+    .faq-header h2 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .faq-section {
+      padding: 40px 0;
+    }
+    
+    .faq-header {
+      margin-bottom: 30px;
+    }
+    
+    .accordion-button {
+      padding: 15px 20px;
+      font-size: 0.9rem;
+    }
+    
+    .accordion-button:not(.collapsed) + .accordion-body {
+      padding: 15px 20px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .faq-header h2 {
+      font-size: 1.5rem;
+    }
+    
+    .accordion-button {
+      padding: 12px 15px;
+    }
+    
+    .accordion-body {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<div class="faq-section">
+  <div class="faq-container">
+    <div class="faq-header">
+    <h2>سوالات متداول </h2>
+     
+    </div>
+    
+    <div class="faq-content">
+      <div class="faq-accordion" id="accordionExample">
+        {% for q in qus %}
+        <div class="accordion-item">
+          <button class="accordion-button collapsed" 
+                  type="button" 
+                  data-bs-toggle="collapse" 
+                  data-bs-target="#collapse{{ forloop.counter }}" 
+                  aria-expanded="false" 
+                  aria-controls="collapse{{ forloop.counter }}">
+            {{ q.question }}
+          </button>
+          
+          <div id="collapse{{ forloop.counter }}" 
+               class="accordion-body collapse" 
+               aria-labelledby="heading{{ forloop.counter }}" 
+               data-bs-parent="#accordionExample">
+            <p>{{ q.answer }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      
+      <div class="faq-image">
+        <img loading="lazy" src="/media/img/rank0.png" alt="سوالات متداول" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</div>

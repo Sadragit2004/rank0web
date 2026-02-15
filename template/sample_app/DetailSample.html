@@ -1,0 +1,230 @@
+{% extends "main_template.html" %}
+
+
+
+{% block meta1 %}
+
+
+<title>{{meta.page_title}}</title>
+<meta name="description" content="{{meta.description}}"/>
+{% if meta.index == True %}
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+{% else %}
+<meta name="robots" content="follow,index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+{% endif %}
+<meta property="og:title" content="{{meta.page_title}}" />
+<meta property="og:description" content="{{meta.description}}" />
+<meta property="og:site_name" content="{{meta.site_name}}" />
+<meta property="og:updated_time" content="{{meta.updated_at}}" />
+<meta property="og:image" content="{{meta.og_image}}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{meta.alt}}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="article:published_time" content="{{meta.created_at}}" />
+<meta property="article:modified_time" content="{{meta.updated_at}}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{meta.page_title}}" />
+<meta name="twitter:description" content="{{meta.description}}" />
+<meta name="twitter:site" content="@ranksefr_com" />
+<meta name="twitter:creator" content="@ranksefr_com" />
+<meta name="twitter:image" content="{{meta.og_image}}" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="صدرا ابادکار" />
+<meta name="twitter:label2" content="Time to read" />
+<meta name="twitter:data2" content="کمتر از یک دقیقه" />
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "{{ meta.page_title }}",
+    "description": "{{ meta.description }}",
+    "url": "{{ request.build_absolute_uri }}",
+    "inLanguage": "fa",
+    "datePublished": "{{ meta.created_at }}",
+    "dateModified": "{{ meta.updated_at }}",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "{{ meta.site_name }}",
+      "url": "{{ site_url }}"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "صدرا ابادکار"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "{{ meta.og_image }}",
+      "width": "1200",
+      "height": "630",
+      "caption": "{{ meta.alt }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ meta.site_name }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ site_logo_url }}",
+        "width": "600",
+        "height": "60"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ request.build_absolute_uri }}"
+    }
+  }
+  </script>
+
+{% endblock meta1 %}
+
+
+{% block title1 %}
+
+{% endblock title1 %}
+
+{% block content %}
+
+
+<div class="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- Page Header Box Start -->
+          <div class="page-header-box">
+            <h1 class="text-anime-style-3">{{sample.title}}</h1>
+            <nav class="wow fadeInUp" >
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'main:index' %}">خانه</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <span>پروژه</span>
+                </li>
+                <li aria-current="page" class="breadcrumb-item active">
+                  توسعه وب
+                </li>
+              </ol>
+            </nav>
+          </div>
+          <!-- Page Header Box End -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page Header End -->
+  <!-- Project Single Page Start -->
+  <div class="page-project-single">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- Project Feature Image Start -->
+          <div class="project-feature-image">
+            <figure class="">
+              <img alt="{{sample.title}}" src="{{media_url}}{{sample.image_name}}" />
+            </figure>
+          </div>
+          <!-- Project Feature Image End -->
+        </div>
+        <div class="col-lg-4">
+          <!-- Project Sidebar Start -->
+          <div class="project-sidebar wow fadeInUp" >
+            <!-- About Project Box Start -->
+            <div class="about-project-box wow fadeInUp">
+              <!-- Project Info Box Start -->
+
+
+              {% for feature in sample.sample_feature.all %}
+              <div class="project-info-box">
+                <div class="project-icon">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+  <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+</svg>
+                </div>
+                <p>{{feature.title}}</p>
+                <h3>{{feature.title2}}</h3>
+              </div>
+              {% endfor %}
+
+            </div>
+            <!-- About Project Box End -->
+          </div>
+          <!-- Project Sidebar End -->
+        </div>
+        <div class="col-lg-8">
+          <!-- Project Content Start -->
+          <div class="project-content">
+            <!-- Project Entry Start -->
+            <div class="project-entry">
+              <h2 class="wow fadeInUp" >
+                بررسی اجمالی پروژه
+              </h2>
+              <p class="ش" data-wow-delay="0.5s">
+
+                {% autoescape off %}{{sample.description}}{% endautoescape %}
+
+              
+              </p>
+              
+              <br>
+              
+              <p class="ش" data-wow-delay="0.5s">
+
+                {% autoescape off %}{{sample.description2}}{% endautoescape %}
+
+              </p>
+
+              <ul class="wow fadeInUp" data-wow-delay="1.5s">
+
+                {% for item in sample.sample_item.all %}
+
+                <li>{{item.title}}</li>
+
+                {% endfor %}
+
+              </ul>
+            </div>
+            <!-- Project Entry End -->
+          </div>
+          <!-- Project Content End -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Project Single Page End -->
+  <div class="project-details-gallery">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- Project Gallery Start -->
+          <div class="project-gallery">
+            <div
+              class="project-gallery-items wow fadeInUp"
+
+            >
+              <!-- Project Gallery Item Start -->
+
+              {% for image in sample.sample_Gallery.all %}
+              <div class="project-gallery-item">
+                <a href="{{media_url}}images/post-1.jpg">
+                  <figure class="">
+                    <img alt="{{image.alt}}" src="{{media_url}}{{image.image_name}}" />
+                  </figure>
+                </a>
+              </div>
+              {% endfor %}
+
+
+            </div>
+          </div>
+          <!-- Project Gallery End -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

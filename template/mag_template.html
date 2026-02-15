@@ -1,0 +1,84 @@
+{% load static %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="fa-IR" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="https://ogp.me/ns#" dir='rtl'>
+
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="apple-mobile-web-app-title" content="RANKSEFR">
+      <meta name="application-name" content="RANKSEFR">
+      <meta name="msapplication-TileColor" content="#358597">
+      <meta name="theme-color" content="#ffffff">
+      <meta property="og:locale" content="fa_IR" />
+      <link rel="alternate" href="https://www.rank0.ir/" hreflang="fa-IR" />
+    <meta property="og:type" content="website" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/media/img/logo-new.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/media/img/logo-new.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/media/img/logo-new.png">
+
+      {% if request.path == "/" %}
+
+    <style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+
+    <!-- بهینه سازی موتور جستجو توسط رنک مث پرو - https://rankmath.com/ -->
+
+       {% else %}
+
+
+          {% block meta1 %}
+          {% endblock meta1 %}
+
+      {% endif %}
+      {% if request.path == "/" %}
+
+
+      {% else %}
+          {% block json %}
+          {% endblock json %}
+      {% endif %}
+
+     
+
+     <!--=====CSS=======-->
+<link rel="shortcut icon" href="{% static 'assets/img/logo/title1.svg' %}" type="image/x-icon" />
+<!--=====CSS=======-->
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/slick-slider.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/aos.css' %}" />
+<link rel="stylesheet" href="https://unpkg.com/swiper@11.2.2/swiper-bundle.min.css" />
+<link rel="stylesheet" href="{% static 'assets/css/mobile-menu.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/utility.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/main222.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/faq3.css' %}" />
+
+
+      <!--=====JQUERY=======-->
+      <script src="{% static 'assets/js/jquery-3-7-1.min.js' %}"></script>
+
+  </head>
+
+<body class="">
+    {% comment %} {% render_partial 'whyus:show_list' %}
+    {% include "partials/plus/load.html" %}
+    {% include "partials/plus/message.html" %} {% endcomment %}
+    {% include "mag_app/mag_partial/header.html" %}
+
+
+
+    {% block content %}
+
+    {% endblock content %}
+
+
+    {% include "mag_app/mag_partial/footer.html" %}
+
+    {% include "mag_app/mag_partial/script.html" %}
+
+</body>
+
+</html>

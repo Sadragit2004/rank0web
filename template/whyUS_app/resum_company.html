@@ -1,0 +1,148 @@
+{% load render_partial %}
+<div class="overview-company stats-section">
+  <div class="container">
+    <div class="row section-row align-items-center">
+      <div class="col-lg-12">
+        <div class="section-title">
+          <div class="section-subtitle">رزومه</div>
+          <h2 class="text-anime-style-3">آمار کلی {% render_partial 'company:name' %}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row stats-row">
+      {% for res in resums %}
+      <div class="col-md-6 stat-col">
+        <div class="counter-box">
+          <div class="counter-content">
+            <span class="counter-value" data-count="{{ res.ress|default_if_none:'0' }}">0</span>
+            <span class="counter-suffix">+</span>
+          </div>
+          <p class="stat-title">{{ res.title }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+.stats-section {
+  padding: 60px 0;
+  background: #f9fafc;
+}
+
+.section-subtitle {
+  color: #333;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+  margin-bottom: 0;
+  font-size: 1.2rem;
+}
+
+.stats-row {
+  margin-top: 40px;
+}
+
+.stat-col {
+  margin-bottom: 30px;
+}
+
+.counter-box {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  height: 100%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+  text-align: center;
+}
+
+.counter-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.counter-content {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.counter-value {
+  font-size: 42px;
+  font-weight: 700;
+  color: #2c3e50;
+  line-height: 1;
+}
+
+.counter-suffix {
+  font-size: 24px;
+  color: #7f8c8d;
+  margin-left: 5px;
+  position: relative;
+  bottom: 5px;
+}
+
+.stat-title {
+  font-size: 18px;
+  color: #7f8c8d;
+  margin: 0;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .stat-col {
+    margin-bottom: 20px;
+  }
+  
+  .counter-value {
+    font-size: 32px;
+  }
+  
+  .counter-suffix {
+    font-size: 18px;
+  }
+  
+  .stat-title {
+    font-size: 16px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const counters = document.querySelectorAll('.counter-value');
+  const speed = 200;
+  
+  function animateCounters() {
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-count');
+      const count = +counter.innerText;
+      const increment = target / speed;
+      
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(animateCounters, 1);
+      } else {
+        counter.innerText = target;
+      }
+    });
+  }
+  
+  // Trigger animation when element is in viewport
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.5});
+  
+  document.querySelectorAll('.stats-section').forEach(section => {
+    observer.observe(section);
+  });
+});
+</script>

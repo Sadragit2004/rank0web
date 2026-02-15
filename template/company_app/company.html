@@ -1,0 +1,328 @@
+{% load render_partial %}
+
+
+
+<style>
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    margin-bottom: 30px;
+}
+
+.btn-hero {
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0; /* جلوگیری از فشرده شدن دکمه‌ها */
+}
+
+/* برای دستگاه‌های بسیار کوچک (اختیاری) */
+@media (max-width: 400px) {
+    .btn-hero {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    .action-buttons {
+        gap: 8px;
+    }
+}
+/* Mobile Styles */
+@media (max-width: 767px) {
+    .hero-title {
+        font-size: 18px !important;
+    }
+}
+
+
+</style>
+
+<section class="hero-section">
+    <div id="vanta-bg" class="hero-background"></div>
+    <div class="container hero-content-container">
+        {% for com in main_pages %}
+        <div class="row align-items-center">
+            
+            <div class="col-lg-7 order-lg-1 order-2 text-content">
+                <h1 class="hero-title">{{ com.subject }}</h1>
+                <p class="hero-description">{{ com.description|safe }}</p>
+
+                <div class="action-buttons">
+                    <a href="/call" class="btn-hero btn-primary">مشاوره رایگان</a>
+                    <a href="/samples" class="btn-hero btn-secondary">نمونه کار</a>
+                    <a style='background-color:#333;' href="tel:09309087909" class="btn-hero btn-tertiary">تماس فوری</a>
+                </div>
+
+                <div class="social-media-icons">
+                    {% render_partial 'company:show_media' %}
+                </div>
+            </div>
+
+            <div class="col-lg-5 order-lg-2 order-1 video-content">
+                <div class="custom-video-promo-container">
+                    <div class="custom-video-thumb-wrapper">
+                        <img loading='lazy' src="{{media_url}}{{com.image_name}}" alt="پیش نمایش ویدیو: {{com.subject}}" class="img-fluid custom-video-thumbnail">
+                        <div class="custom-video-overlay">
+                            <div class="custom-play-btn-container">
+                                <a href="https://www.aparat.com/v/eyrkay5" class="popup-video custom-video-play-btn" aria-label="پخش ویدیو معرفی">
+                                    <i class="fa-solid fa-play"></i>
+                                </a>
+                            </div>
+                            <p class="custom-video-desc">در ۱ دقیقه با ما آشنا شوید</p>
+                            <div class="custom-duration-badge">
+                                <i class="fa-regular fa-clock"></i>
+                                <span>0:59</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+    /* General Styles */
+    .hero-section {
+        position: relative;
+        padding: 60px 0;
+        color: #333;
+        overflow: hidden;
+    }
+    
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    
+    .hero-content-container {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Text Content */
+    .text-content {
+        padding: 20px;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        line-height: 1.3;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 30px;
+        line-height: 1.7;
+    }
+    
+    /* Video Content */
+    .video-content {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .custom-video-promo-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .custom-video-thumb-wrapper {
+        position: relative;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    }
+    
+    .custom-video-thumbnail {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .custom-video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .custom-play-btn-container {
+        margin-bottom: 15px;
+    }
+    
+    .custom-video-play-btn {
+        width: 70px;
+        height: 70px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #007bff;
+        font-size: 24px;
+        transition: all 0.3s ease;
+        animation: pulse 2s infinite;
+    }
+    
+    .custom-video-play-btn:hover {
+        background: #007bff;
+        color: white;
+        transform: scale(1.1);
+    }
+    
+    .custom-video-desc {
+        color: white;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    
+    .custom-duration-badge {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background: rgba(0,0,0,0.7);
+        padding: 5px 10px;
+        border-radius: 4px;
+        color: white;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+    
+    .btn-hero {
+        padding: 12px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-hero.btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+    
+    .btn-hero.btn-secondary {
+        background-color: transparent;
+        color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .btn-hero.btn-tertiary {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    /* Social Icons */
+    .social-media-icons {
+        display: flex;
+        gap: 15px;
+    }
+    
+    /* Animations */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    /* Desktop Styles */
+    @media (min-width: 992px) {
+        .hero-section {
+            padding: 100px 0;
+        }
+        
+        .hero-title {
+            font-size: 2.8rem;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+        }
+        
+        .text-content {
+            padding-right: 30px;
+            padding-left: 0;
+        }
+        
+        .video-content {
+            padding-left: 30px;
+            padding-right: 0;
+        }
+        
+        .action-buttons {
+            justify-content: flex-start;
+        }
+        
+        .social-media-icons {
+            justify-content: flex-start;
+        }
+    }
+    
+    /* Mobile Order Adjustment */
+    @media (max-width: 991px) {
+        .order-lg-1 {
+            order: 2;
+        }
+        
+        .order-lg-2 {
+            order: 1;
+            margin-bottom: 30px;
+        }
+        
+        .text-content {
+            text-align: center;
+        }
+        
+        .action-buttons {
+            justify-content: center;
+        }
+        
+        .social-media-icons {
+            justify-content: center;
+        }
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

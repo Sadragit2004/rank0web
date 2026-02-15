@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /landing/
+Disallow: /sample-detail/
+
+Allow: /
+
+Sitemap: https://rank0.ir/sitemap.xml

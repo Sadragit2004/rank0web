@@ -1,0 +1,78 @@
+{% load static %}
+
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<!-- Bootstrap js file -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Validator js file -->
+<script src="{% static 'js/validator.min.js' %}"></script>
+<!-- SlickNav js file -->
+<script src="{% static 'js/jquery.slicknav.js' %}"></script>
+<!-- Swiper js file -->
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<!-- Counter js file -->
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+<!-- Isotop js file -->
+<script src="{% static 'js/isotope.min.js' %}"></script>
+<!-- Magnific js file -->
+<!-- SmoothScroll -->
+<script src="{% static 'js/SmoothScroll.js' %}"></script>
+<!-- MagicCursor js file -->
+<!-- Text Effect js file -->
+<script src="{% static 'js/SplitText.js' %}"></script>
+<script src="{% static 'js/ScrollTrigger.min.js' %}"></script>
+<!-- Wow js file -->
+
+<!-- Main Custom js file -->
+
+<script>
+    // تابع برای تشخیص دستگاه (موبایل یا دسکتاپ)
+// تابع برای بازنویسی یا تنظیم اندازه فونت پیش‌فرض هدینگ‌ها و متن‌ها
+function overrideFontSizes() {
+    // اندازه جدید برای هدینگ‌ها و متن‌ها
+    const headingFontSizeMobile = "26px";
+    const headingFontSizeDesktop = "32px";
+    const textFontSizeMobile = "14px";
+    const textFontSizeDesktop = "18px";
+
+    // عرض صفحه برای تعیین موبایل یا دسکتاپ
+    const screenWidth = window.innerWidth;
+
+    // تغییر اندازه فونت هدینگ‌ها
+    const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    headings.forEach((heading) => {
+        if (heading.id === "imp") return; // اگر آی دی برابر imp بود، تغییر نده
+        const computedFontSize = window.getComputedStyle(heading).fontSize;
+        if (screenWidth <= 768) {
+            heading.style.fontSize = headingFontSizeMobile;
+        } else {
+            heading.style.fontSize = headingFontSizeDesktop;
+        }
+    });
+
+    // تغییر اندازه فونت متن توضیحات
+    const texts = document.querySelectorAll("p, span, .text");
+    texts.forEach((text) => {
+        if (text.id === "imp") return; // اگر آی دی برابر imp بود، تغییر نده
+        const computedFontSize = window.getComputedStyle(text).fontSize;
+        if (screenWidth <= 768) {
+            text.style.fontSize = textFontSizeMobile;
+        } else {
+            text.style.fontSize = textFontSizeDesktop;
+        }
+    });
+}
+
+// اجرای تابع هنگام بارگذاری صفحه
+window.addEventListener("load", overrideFontSizes);
+
+// اجرای دوباره تابع هنگام تغییر اندازه صفحه (ریسایز)
+window.addEventListener("resize", overrideFontSizes);
+
+
+
+
+
+    
+
+</script>

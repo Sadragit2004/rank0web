@@ -1,0 +1,211 @@
+{% load render_partial %}
+{% load static %}
+
+<div style='color:black; background:black;' class="top-info-bar d-none d-lg-block">
+    <div style='text-align: center;' class="container">
+        <span style='background: black;
+    color: #fff;
+    text-align: center;'>شماره تماس: 09309087909</span>
+    </div>
+</div>
+
+<header class="main-header header-sticky">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <div class="mobile-header-container">
+                
+                {% render_partial 'company:logo' %}
+
+                <div id="desktop-menu" class="collapse navbar-collapse main-menu">
+                    <ul class="navbar-nav mr-auto">
+                      
+                        <li class="nav-item"><a class="nav-link" href="/website-design-tabriz">طراحی سایت در تبریز</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'sample:sample_list' %}">نمونه کارها</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/tabriz-seo">خدمات سئو در تبریز</a></li>
+                      
+                        <li class="nav-item"><a class="nav-link" href="{% url 'call:call' %}">تماس با ما</a></li>
+                    </ul>
+                </div>
+
+                <button class="mobile-access-btn d-lg-none" onclick="toggleMobileAccessMenu()" aria-label="دسترسی سریع">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobile-access-menu" class="mobile-access-menu d-lg-none">
+                        <a href="/tabriz-seo">سئو سایت در تبریز</a>
+                <a href="{% url 'sample:sample_list' %}">نمونه کارها</a>
+                <a href="{% url 'call:call' %}">تماس با ما</a>
+                <a href="/website-design-tabriz">طراحی سایت تبریز</a>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+
+
+{% render_partial 'chat:chat_page' %}
+
+<style>
+/* =================================
+   هدر اصلی و واکنش‌گرایی
+==================================== */
+.main-header .navbar {
+    padding: 10px 0; /* کمی فضای داخلی برای هدر */
+}
+
+.mobile-header-container {
+    display: flex; /* کلید اصلی: فعال‌سازی Flexbox */
+    justify-content: space-between; /* لوگو در یک سمت، دکمه در سمت دیگر */
+    align-items: center; /* تراز عمودی در مرکز */
+    width: 100%; /* گرفتن تمام عرض container */
+    position: relative; /* برای موقعیت‌دهی منوی کشویی */
+}
+
+/* دکمه همبرگری موبایل */
+.mobile-access-btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+    padding: 5px 10px;
+    z-index: 1001;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.mobile-access-btn:hover {
+    background-color: #f0f0f0;
+}
+
+/* منوی کشویی موبایل */
+.mobile-access-menu {
+    position: absolute;
+    top: calc(100% + 10px); /* قرارگیری دقیقاً زیر هدر با کمی فاصله */
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.mobile-access-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.mobile-access-menu a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.mobile-access-menu a:hover {
+    background: #f1f1f1;
+    color: #21d4fd;
+}
+
+
+/* =================================
+   نوار دکمه‌های ثابت پایین
+==================================== */
+.mobile-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.mobile-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 12px;
+    transition: color 0.2s;
+}
+
+.mobile-btn:hover {
+    color: #21d4fd;
+}
+
+/* دکمه تماس فوری وسط */
+.mobile-call-btn {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #21d4fd, #b721ff);
+    border-radius: 50%;
+    box-shadow: 0 8px 15px rgba(33, 211, 253, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 22px;
+    animation: pulse 1.8s infinite ease-in-out;
+    text-decoration: none;
+    z-index: 1000;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(33, 211, 253, 0.4); }
+    50% { box-shadow: 0 0 0 20px rgba(33, 211, 253, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(33, 211, 253, 0); }
+}
+
+.mobile-call-btn:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+
+
+
+@media (min-width: 992px) {
+    .mobile-header-container {
+        /* در دسکتاپ، آیتم‌ها از چپ به راست چیده شوند */
+        justify-content: flex-start; 
+    }
+
+    #desktop-menu {
+        /* منوی دسکتاپ تمام فضای خالی موجود را اشغال کند */
+        flex-grow: 1;
+    }
+
+    #desktop-menu .navbar-nav {
+        /* لیست منوها در انتهای فضای خود (سمت راست) قرار بگیرند */
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+</style>
+
+
+<script>
+function toggleMobileAccessMenu() {
+  const menu = document.getElementById("mobile-access-menu");
+  menu.classList.toggle("show");
+}
+</script>

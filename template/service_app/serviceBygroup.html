@@ -1,0 +1,162 @@
+{% extends "main_template.html" %}
+{% load render_partial %}
+
+
+
+{% block meta1 %}
+<title>{{meta.page_title}}</title>
+<meta name="description" content="{{meta.description}}"/>
+{% if meta.index == True %}
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+{% else %}
+<meta name="robots" content="nofollow, noindex, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+{% endif %}
+<meta property="og:title" content="{{meta.page_title}}" />
+<meta property="og:description" content="{{meta.description}}" />
+<meta property="og:site_name" content="{{meta.site_name}}" />
+<meta property="og:updated_time" content="{{meta.updated_at}}" />
+<meta property="og:image" content="{{meta.og_image}}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{meta.alt}}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="article:published_time" content="{{meta.created_at}}" />
+<meta property="article:modified_time" content="{{meta.updated_at}}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{meta.page_title}}" />
+<meta name="twitter:description" content="{{meta.description}}" />
+<meta name="twitter:site" content="@ranksefr_com" />
+<meta name="twitter:creator" content="@ranksefr_com" />
+<meta name="twitter:image" content="{{meta.og_image}}" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="صدرا ابادکار" />
+<meta name="twitter:label2" content="Time to read" />
+<meta name="twitter:data2" content="کمتر از یک دقیقه" />
+
+
+
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "WebPage",
+"name": "{{ meta.page_title }}",
+"description": "{{ meta.description }}",
+"url": "{{ request.build_absolute_uri }}",
+"inLanguage": "fa",
+"datePublished": "{{ meta.created_at }}",
+"dateModified": "{{ meta.updated_at }}",
+"isPartOf": {
+  "@type": "WebSite",
+  "name": "{{ meta.site_name }}",
+  "url": "{{ site_url }}"
+},
+"author": {
+  "@type": "Person",
+  "name": "صدرا ابادکار"
+},
+"image": {
+  "@type": "ImageObject",
+  "url": "{{ meta.og_image }}",
+  "width": "1200",
+  "height": "630",
+  "caption": "{{ meta.alt }}"
+},
+"publisher": {
+  "@type": "Organization",
+  "name": "{{ meta.site_name }}",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "{{ site_logo_url }}",
+    "width": "600",
+    "height": "60"
+  }
+},
+"mainEntityOfPage": {
+  "@type": "WebPage",
+  "@id": "{{ request.build_absolute_uri }}"
+}
+}
+</script>
+
+
+{% endblock meta1 %}
+
+
+{% block json %}
+
+{% endblock json %}
+
+{% block content %}
+
+
+<div class="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- Page Header Box Start -->
+          <div class="page-header-box">
+            <h1 class="text-anime-style-3">خدمات {{group.title_group}}</h1>
+            <nav class="wow fadeInUp" data-wow-delay="0.25s">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'main:index' %}">خانه</a>
+                </li>
+                <li aria-current="page" class="breadcrumb-item active">
+                  <a href="{% url 'service:services' %}">خدمات {% render_partial 'company:name' %}</a>
+                </li>
+              </ol>
+            </nav>
+          </div>
+          <!-- Page Header Box End -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  {% render_partial 'service:service_group' %}
+  <!-- Page Header End -->
+  <!-- Our Services Section Start -->
+  <div class="our-services page-service">
+    <div class="container">
+      <div class="row">
+
+
+       {% for item in services %}
+       <div class="col-lg-4 col-md-6">
+        <!-- Service Item Start -->
+        <div class="service-item wow fadeInUp" data-wow-delay="0.25s">
+          <div class="service-content">
+            <div class="service-content-title">
+              <a style="all: unset; text-decoration: none; max-width: 400px;" href="{% url 'service:www' slug=item.slug %}">
+                <h2 id='imp' style='max-width: 400px;'>{{item.title}}</h2>
+            </a>
+              <a href="{% url 'service:www' slug=item.slug %}"
+                ><img alt="{{item.title}}" src="{{media_url}}images/arrow.svg"
+              /></a>
+            </div>
+            <p>
+             {% autoescape off %} {{item.text_summery}}{% endautoescape %}
+            </p>
+          </div>
+          <div class="service-image">
+            <figure class="image-anime">
+              <img alt="{{item.title}}" src="{{media_url}}{{item.image_name}}" />
+            </figure>
+          </div>
+        </div>
+        <!-- Service Item End -->
+      </div>
+       {% endfor %}
+
+      </div>
+    </div>
+  </div>
+  <!-- Our Services Section End -->
+  <!-- Overview Comapny Section Start -->
+
+
+
+
+{% endblock content %}

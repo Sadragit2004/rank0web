@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow">
+  <title>My Professional UI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .typing {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 3s steps(30, end), blink .5s step-end infinite;
+      border-right: 2px solid #000;
+      width: fit-content;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* Mobile menu styles */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    /* Social media floating button */
+    .social-float {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 50;
+    }
+    .social-panel {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    .social-panel.open {
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- Floating Social Button (Left Side) -->
+  <div class="social-float">
+    <button onclick="toggleSocialPanel()" class="bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition">
+      <i class="fab fa-whatsapp text-xl"></i>
+    </button>
+    <div class="social-panel absolute left-0 top-0 mt-2 bg-white p-4 rounded-lg shadow-lg space-y-3">
+      <a href="#" class="block text-blue-600 hover:text-blue-800"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="#" class="block text-gray-800 hover:text-gray-600"><i class="fab fa-github"></i> GitHub</a>
+      <a href="#" class="block text-pink-600 hover:text-pink-800"><i class="fab fa-instagram"></i> Instagram</a>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Button (Hamburger) -->
+  <button id="mobileMenuButton" class="md:hidden fixed top-4 right-4 z-50 bg-black text-white p-3 rounded-lg">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-black bg-opacity-90 z-40 flex flex-col items-center justify-center space-y-8">
+    <button id="closeMenuButton" class="absolute top-4 right-4 text-white text-2xl">
+      <i class="fas fa-times"></i>
+    </button>
+    <a href="#home" class="text-white text-2xl" onclick="closeMobileMenu()">Home</a>
+    <a href="#brands" class="text-white text-2xl" onclick="closeMobileMenu()">Brands</a>
+    <a href="#contact" class="text-white text-2xl" onclick="closeMobileMenu()">Contact</a>
+    <a href="#about" class="text-white text-2xl" onclick="closeMobileMenu()">About</a>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="hidden md:block fixed top-4 right-4 z-50 space-x-2">
+    <a href="#home" class="bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition">Home</a>
+    <a href="#brands" class="bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition">Brands</a>
+    <a href="#contact" class="bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition">Contact</a>
+    <a href="#about" class="bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition">About</a>
+  </nav>
+
+  <!-- Section 1 -->
+  <section id="home" class="min-h-screen flex flex-col lg:flex-row items-center justify-center px-8 py-16 gap-12">
+    <!-- Profile + About -->
+    <div class="flex flex-col items-center lg:items-start space-y-8 max-w-2xl">
+      <div class="flex flex-col lg:flex-row items-center gap-8">
+        <img src="s.jpeg" alt="profile" class="rounded-full w-48 h-48 object-cover shadow-lg" />
+        <div>
+          <h1 class="text-3xl font-bold typing">Sadra Abadkar - SEO Expert</h1>
+          <div class="flex space-x-4 mt-4">
+            <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fab fa-linkedin text-2xl"></i></a>
+            <a href="#" class="text-gray-800 hover:text-gray-600"><i class="fab fa-github text-2xl"></i></a>
+            <a href="#" class="text-pink-600 hover:text-pink-800"><i class="fab fa-instagram text-2xl"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Me (Special Section) -->
+      <div id="about" class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-black">
+        <h2 class="text-2xl font-bold mb-4">About Me</h2>
+        <p class="text-gray-700 leading-relaxed">
+          As an SEO strategist with a proven record of driving visibility for brands, I specialize in blending creative content with cutting-edge technical practices. From startups to established enterprises, I have led campaigns that deliver measurable results.
+        </p>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          My focus is not just on rankings, but on crafting sustainable growth engines through data-backed SEO, effective consulting, and real partnership. Let's build something impactful together.
+        </p>
+      </div>
+    </div>
+
+    <!-- Image + Slides -->
+    <div class="flex flex-col items-center justify-center mt-8 lg:mt-0">
+      <img id="mainSlide" src="s.jpeg" class="rounded-xl w-full max-w-md mb-6 shadow-xl transition duration-500" alt="Main Slide Image" />
+      <div class="flex space-x-4 justify-center">
+        <button onclick="changeSlide(1)" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">Slide 1</button>
+        <button onclick="changeSlide(2)" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">Slide 2</button>
+        <button onclick="changeSlide(3)" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">Slide 3</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Brands -->
+  <section id="brands" class="bg-white py-16 px-8">
+    <h2 class="text-2xl font-bold mb-8 text-center">Brands I've Worked With</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 justify-items-center">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="w-20 h-20 rounded-full object-contain grayscale hover:grayscale-0 transition duration-300" alt="Brand 1" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" class="w-20 h-20 rounded-full object-contain grayscale hover:grayscale-0 transition duration-300" alt="Brand 2" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="w-20 h-20 rounded-full object-contain grayscale hover:grayscale-0 transition duration-300" alt="Brand 3" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="w-20 h-20 rounded-full object-contain grayscale hover:grayscale-0 transition duration-300" alt="Brand 4" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" class="w-20 h-20 rounded-full object-contain grayscale hover:grayscale-0 transition duration-300" alt="Brand 5" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/Instagram-Icon.png" class="w-20 h-20 rounded-full object-contain grayscale hover:grayscale-0 transition duration-300" alt="Brand 6" />
+    </div>
+  </section>
+
+  <!-- Section 3: Contact -->
+  <section id="contact" class="bg-gray-100 py-16 px-8">
+    <h2 class="text-2xl font-bold mb-6 text-center">Get in Touch</h2>
+    <form class="max-w-xl mx-auto space-y-4">
+      <input type="text" placeholder="Your Name" class="w-full border px-4 py-2 rounded" />
+      <input type="email" placeholder="Your Email" class="w-full border px-4 py-2 rounded" />
+      <textarea placeholder="Message" class="w-full border px-4 py-2 rounded" rows="4"></textarea>
+      <select class="w-full border px-4 py-2 rounded">
+        <option disabled selected>Select Service</option>
+        <option>SEO Consulting</option>
+        <option>SEO Services</option>
+      </select>
+      <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 w-full">Submit</button>
+    </form>
+  </section>
+
+  <script>
+    const images = [
+      "s.jpeg",
+      "s.png",
+      "s.jpeg"
+    ];
+
+    function changeSlide(index) {
+      document.getElementById("mainSlide").src = images[index - 1];
+    }
+
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const closeMenuButton = document.getElementById('closeMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.add('open');
+    });
+
+    closeMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+    }
+
+    // Social panel functionality
+    let socialPanelOpen = false;
+
+    function toggleSocialPanel() {
+      const panel = document.querySelector('.social-panel');
+      socialPanelOpen = !socialPanelOpen;
+
+      if (socialPanelOpen) {
+        panel.classList.add('open');
+      } else {
+        panel.classList.remove('open');
+      }
+    }
+
+    // Close social panel when clicking outside
+    document.addEventListener('click', (e) => {
+      const socialFloat = document.querySelector('.social-float');
+      const isClickInside = socialFloat.contains(e.target);
+
+      if (!isClickInside && socialPanelOpen) {
+        toggleSocialPanel();
+      }
+    });
+  </script>
+</body>
+</html>

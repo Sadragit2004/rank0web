@@ -1,0 +1,22 @@
+{% for top in top_authors %}
+<div class="sidebar-widget_1 _author-intro mt-40">
+    <div class="sidebar-author-thumb text-center">
+        <img src="{{media_url}}{{top.image_name}}" alt="نویسنده مطالب" />
+        <div>{{top.full_name}}</div>
+        <div class="heading1">
+            <p>{% autoescape off %}{{top.description}}{% endautoescape %}</p>
+        </div>
+        <div class="footer-social1">
+            <ul>
+
+                {%  for social in top.socialmediaauthor_set.all  %}
+                <li>
+                    <a href="{{social.link}}">{% autoescape off %}{{social.svg_link}}{% endautoescape %}</a>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+{% endfor %}

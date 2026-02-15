@@ -1,0 +1,86 @@
+{% load render_partial %}
+<section>
+    <div class="our-services">
+        <div class="container">
+            <!-- عنوان بخش -->
+            <div class="row section-row align-items-center">
+                <div class="col-lg-7 col-md-7">
+                    <h3 class="h1">خدمات</h3>
+                </div>
+               
+            </div>
+
+            <!-- شروع ردیف خدمات -->
+            <div class="row">
+                {% for service in services %}
+                    <!-- نسخه دسکتاپ و تبلت (ویرایش شده) -->
+                    <div class="col-lg-4 col-md-6 service-desktop">
+                        <a href="{% url 'service:www' slug=service.slug %}" class="pc-service-item" style="display: flex; align-items: center; background: #f7f7f7; padding: 15px; border-radius: 8px; text-decoration: none; height: 120px; margin-bottom: 20px; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(255,0,0,0.2);">
+                            <img loading='lazy' src="{{media_url}}{{service.image_name}}" alt="{{service.title}}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; margin-left: 15px;">
+                            <div style="flex: 1;">
+                                <div style="font-size: 16px; color: #222; font-weight: bold; margin-bottom: 5px;">{{ service.title }}</div>
+                                <div style="font-size: 13px; color: #555; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ service.text_summery }}</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- نسخه موبایل (دست نخورده) -->
+                    <div class="col-12 service-mobile" style="margin-bottom: 15px;">
+                        <a href="{% url 'service:www' slug=service.slug %}" style="display: flex; align-items: center; background: #f7f7f7; padding: 10px; border-radius: 8px; text-decoration: none;">
+                            <img loading='lazy' src="{{media_url}}{{service.image_name}}" alt="{{service.title}}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-left: 10px;">
+                            <div>
+                                <div style="font-size: 15px; color: #222; font-weight: bold;">{{ service.title }}</div>
+                                <div style="font-size: 13px; color: #555;">{{ service.text_summery|truncatechars:40 }}</div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.pc-service-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.pc-service-item:hover {
+    background: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 50, 50, 0.4);
+}
+
+.pc-service-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,0,0,0.1) 0%, rgba(255,0,0,0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pc-service-item:hover::after {
+    opacity: 1;
+}
+
+/* پیش‌فرض: نسخه موبایل پنهان */
+.service-mobile {
+    display: none;
+}
+
+/* در موبایل: نسخه دسکتاپ پنهان، نسخه موبایل فعال */
+@media (max-width: 767px) {
+    .service-desktop {
+        display: none !important;
+    }
+
+    .service-mobile {
+        display: block;
+    }
+}
+</style>

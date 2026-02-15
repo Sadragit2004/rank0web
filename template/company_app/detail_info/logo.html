@@ -1,0 +1,36 @@
+ <style>
+        /* تنظیمات لوگو */
+        #logo1 {
+            width: 100%;        /* عرض لوگو به اندازه کانتینر */
+            height: auto;       /* ارتفاع به صورت خودکار */
+            max-width: 200px;   /* حداکثر عرض لوگو */
+        }
+
+        /* استایل پیش‌فرض */
+        .navbar-brand {
+            display: flex;
+            align-items: center; /* مرکز عمودی */
+            justify-content: left; /* لوگو در حالت دسکتاپ سمت چپ */
+        }
+
+        /* مرکز کردن لوگو در حالت گوشی */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                display: flex; 
+                justify-content: center; /* مرکز افقی */
+                align-items: center; /* مرکز عمودی */
+                width: 100%; /* عرض کامل برای کانتینر والد */
+            }
+
+            #logo1 {
+                margin: auto; /* لوگو را مجبور به مرکز کنید */
+            }
+        }
+    </style>
+
+{% for com in companys %}
+<a class="navbar-brand" href="{% url 'main:index' %}">
+    <img  width="50%" 
+     height="50%"  id="logo1" alt="Logo" src="{{media_url}}{{com.image_name}}" />
+</a> 
+{% endfor %}

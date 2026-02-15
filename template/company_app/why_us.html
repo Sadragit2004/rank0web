@@ -1,0 +1,176 @@
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+<style>
+    /* --- استایل‌های کلی --- */
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f0f2f5;
+    }
+
+    /* --- استایل کامپوننت کامنت‌ها --- */
+    .customer-comments {
+        width: 100%;
+        padding: 50px 0;
+        overflow: hidden;
+    }
+    
+    .comments-title {
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 30px;
+        font-weight: 700;
+    }
+
+    .comment-box {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    .comment-box:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-pic {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-left: 15px;
+        border: 3px solid #f0f2f5;
+    }
+
+    .fullname {
+        font-weight: 600;
+        font-size: 1.1em;
+        color: #333;
+    }
+
+    .comment-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .comment-text {
+        font-size: 1em;
+        line-height: 1.7;
+        color: #555;
+        margin-bottom: 20px;
+        flex-grow: 1;
+    }
+
+    .comment-video {
+        margin-top: auto;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .comment-video video {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    /* --- استایل‌های Swiper --- */
+    .swiper-container {
+        padding-bottom: 40px !important;
+    }
+    
+    .swiper-pagination-bullet {
+        background: #ccc;
+        opacity: 1;
+    }
+
+    .swiper-pagination-bullet-active {
+        background: #007bff;
+    }
+</style>
+
+<div class="customer-comments">
+    <h2 class="comments-title">نظرات مشتریان رنک صفر</h2>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            
+            {% for comment in Comm %}
+            <div class="swiper-slide">
+                <div class="comment-box">
+                    <div class="comment-header">
+                        {% if comment.image_name and comment.image_name.url %}
+                            <img src="{{ comment.image_name.url }}" alt="رضایت مشتری: {{ comment.fullname }}" class="profile-pic">
+                        {% else %}
+                            <img src="/static/images/default-avatar.png" alt="پروفایل پیش‌فرض" class="profile-pic">
+                        {% endif %}
+                        <span class="fullname">{{ comment.fullname }}</span>
+                    </div>
+                    <div class="comment-body">
+                        <p class="comment-text">{{ comment.des }}</p>
+
+                        {% if comment.video_name and comment.video_name.url %}
+                            <div class="comment-video">
+                                <video controls preload="metadata" width="100%">
+                                    <source src="{{ comment.video_name.url }}" type="video/mp4">
+                                    مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
+                                </video>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        centeredSlides: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+            },
+            1024: {
+                slidesPerView: 3.5,
+                spaceBetween: 40,
+            },
+        },
+        effect: 'coverflow',
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+        },
+        mousewheel: true,
+    });
+</script>

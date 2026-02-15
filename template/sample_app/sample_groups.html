@@ -1,0 +1,39 @@
+<div class="col-lg-12 col-md-12">
+    <!-- Sidebar Our Projects Nav start -->
+    <div class="our-projects-nav wow fadeInUp" data-wow-delay="0.25s">
+      <ul>
+        <li>
+          <a class="active-btn" data-filter="*" href="{% url 'sample:sample_list' %}"
+            >همه</a
+          >
+        </li>
+
+
+        {% for group in groups %}
+        <li>
+            <a data-filter=".digital" href="{% url 'sample:sample_groups' slug=group.slug %}"
+              >{{group.title_group}}</a
+            >
+          </li>
+        {% endfor %}
+
+      </ul>
+    </div>
+    <!-- Sidebar Our Projects Nav End -->
+  </div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const projectLinks = document.querySelectorAll(".our-projects-nav ul li a");
+
+        projectLinks.forEach((link) => {
+          link.addEventListener("click", function (event) {
+            event.preventDefault(); // جلوگیری از رفتار پیش‌فرض لینک
+            const targetUrl = this.getAttribute("href"); // گرفتن آدرس لینک
+            window.location.href = targetUrl; // هدایت به آدرس
+          });
+        });
+      });
+
+  </script>

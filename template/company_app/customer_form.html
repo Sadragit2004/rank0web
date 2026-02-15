@@ -1,0 +1,521 @@
+{% extends "main_template.html" %}
+{% load render_partial %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>مشاوره و سئو رایگان</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+     <meta name="robots" content="noindex, nofollow">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazir:wght@400;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Vazir', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    .bg-animated {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      z-index: -2;
+    }
+    
+    .bg-animated::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+      animation: floatBubbles 20s ease-in-out infinite;
+    }
+    
+    @keyframes floatBubbles {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .glass-card {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    .main-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    
+    @media (min-width: 768px) {
+      .main-container {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+    }
+    
+    .form-section {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .info-section {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      color: white;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    
+    .input-field {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid rgba(103, 126, 234, 0.2);
+      border-radius: 12px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    
+    .input-field:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(103, 126, 234, 0.1);
+      background: white;
+    }
+    
+    .input-field::placeholder {
+      color: #9ca3af;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(103, 126, 234, 0.3);
+    }
+    
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+    
+    .logo-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 50%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      background: white;
+      padding: 1rem;
+    }
+    
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .checkbox-wrapper input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: #667eea;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fbbf24;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: 0.5rem;
+    }
+    
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .floating-element {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 15s infinite ease-in-out;
+    }
+    
+    .floating-element:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .floating-element:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      top: 60%;
+      right: 10%;
+      animation-delay: 5s;
+    }
+    
+    .floating-element:nth-child(3) {
+      width: 40px;
+      height: 40px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 10s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-20px) rotate(90deg); }
+      50% { transform: translateY(-40px) rotate(180deg); }
+      75% { transform: translateY(-20px) rotate(270deg); }
+    }
+    
+    .action-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .action-btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .btn-primary {
+      background: rgba(31, 41, 55, 0.9);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: rgba(0, 0, 0, 0.9);
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: rgba(34, 197, 94, 0.9);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(22, 163, 74, 0.9);
+      transform: translateY(-2px);
+    }
+    
+    .success-message {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 1rem;
+        gap: 1rem;
+      }
+      
+      .form-section {
+        padding: 1.5rem;
+      }
+      
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .navbar-brand{
+        
+        display:none;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-animated"></div>
+  
+  <div class="floating-elements">
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+  </div>
+  
+  <div class="main-container">
+    <!-- بخش فرم -->
+    <div class="form-section">
+      
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2 leading-relaxed">
+  🚀 سفارش و مشاوره<br class="sm:hidden"> سایت 9 میلیونی
+</h1>
+
+      <p class="text-center text-gray-600 mb-6">
+        شماره‌تون رو وارد کنید تا مشاور رسمی ما تماس بگیره
+      </p>
+      
+      <form method="post" id="consultationForm">
+        {% csrf_token %}
+        
+        {% if messages %}
+          {% for message in messages %}
+            <div class="success-message">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        
+        {{ form.non_field_errors }}
+        
+        <div class="input-group">
+          <input type="text" 
+                 name="mobile_number" 
+                 placeholder="📱 شماره موبایل (مثال: 09123456789)"
+                 class="input-field"
+                 required>
+          {{ form.mobile_number.errors }}
+        </div>
+        
+        <div class="input-group">
+          <input type="text" 
+                 name="fullname" 
+                 placeholder="👤 نام و نام خانوادگی"
+                 class="input-field"
+                 required>
+          {{ form.fullname.errors }}
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" 
+                 name="is_call" 
+                 id="id_is_call" 
+                 checked>
+          <label for="id_is_call" class="text-gray-700">
+            ✅ مایلم با من تماس گرفته شود
+          </label>
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          🔥 ثبت اطلاعات
+        </button>
+      </form>
+      
+      <div class="action-buttons">
+        <a href="/" class="action-btn btn-primary">
+          🏠 ورود به سایت
+        </a>
+        <a href="/" class="action-btn btn-secondary">
+          💰 قیمت و نمونه‌کار
+        </a>
+      </div>
+      
+      <div class="text-center mt-4 text-sm text-gray-500">
+        <p>🔒 اطلاعات شما محرمانه و امن باقی می‌ماند</p>
+        <p class="mt-1">
+          تحت مالکیت 
+          <span class="font-bold text-purple-600">Rank0.ir</span>
+        </p>
+      </div>
+    </div>
+    
+    <!-- بخش اطلاعات -->
+    <div class="info-section">
+      <div class="feature-card">
+        <h3 class="text-xl font-bold mb-3">🎯 چرا ما را انتخاب کنید؟</h3>
+        <ul class="space-y-2 text-sm">
+          <li>✅ مشاوره رایگان و تخصصی</li>
+          <li>✅ بهینه‌سازی حرفه‌ای وب‌سایت</li>
+          <li>✅ نتایج تضمینی در گوگل</li>
+          <li>✅ پشتیبانی 24 ساعته</li>
+        </ul>
+      </div>
+      
+      <div class="feature-card">
+        <h3 class="text-xl font-bold mb-3">📊 آمار موفقیت‌ها</h3>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">پروژه موفق</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">95%</div>
+            <div class="stat-label">رضایت مشتری</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">پشتیبانی</div>
+          </div>
+        </div>
+      </div>
+      
+   
+    </div>
+  </div>
+  
+  <script>
+    // انیمیشن فرم
+    document.getElementById('consultationForm').addEventListener('submit', function(e) {
+      const submitBtn = this.querySelector('.submit-btn');
+      submitBtn.innerHTML = '⏳ در حال ارسال...';
+      submitBtn.disabled = true;
+    });
+    
+    // ولیدیشن شماره موبایل
+    document.querySelector('input[name="mobile_number"]').addEventListener('input', function(e) {
+      const value = e.target.value.replace(/\D/g, '');
+      if (value.length > 11) {
+        e.target.value = value.substring(0, 11);
+      }
+    });
+    
+    // افکت hover برای کارت‌ها
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+    
+    // انیمیشن ظاهر شدن المان‌ها
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
+{% endblock content %}

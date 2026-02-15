@@ -1,0 +1,80 @@
+{% load render_partial %}
+<div class="exclusive-partners">
+    <div class="container">
+      <div class="row section-row align-items-center">
+        <div class="col-lg-12">
+          <!-- Section Title Start -->
+          <div class="section-title">
+            <div style='color:#333; letter-spacing: -0.05em; font-weight: 700; margin-bottom: 0;' class="">شرکا</div>
+            <h2 class="text-anime-style-3">شرکا و حامی {% render_partial 'company:name' %}</h2>
+          </div>
+          <!-- Section Title End -->
+        </div>
+      </div>
+      <div class="row partners-row">  <!-- اضافه کردن کلاس partners-row -->
+
+       {% for co in cobs %}
+       <div class="col-lg-3 col-6 partner-col">  <!-- اضافه کردن کلاس partner-col -->
+        <!-- Partners Logo Start -->
+        <div class="partners-logo" data-wow-delay="0.6s">
+          <div class="logo-container">  <!-- اضافه کردن یک container جدید -->
+            <img alt="{{co.name_c}}" src="{{media_url}}{{co.image_name}}" class="partner-logo"/>
+          </div>
+        </div>
+        <!-- Partners Logo End -->
+      </div>
+       {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+<style>
+  /* استایل‌های جدید */
+  .partners-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .partner-col {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .logo-container {
+    width: 180px;  /* اندازه ثابت برای همه لوگوها */
+    height: 120px;  /* ارتفاع ثابت */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+  }
+  
+  .logo-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+  
+  .partner-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  .partner-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+</style>

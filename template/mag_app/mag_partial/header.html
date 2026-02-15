@@ -1,0 +1,91 @@
+{% load render_partial %}
+<header>
+    <div class="header-area header-area1 d-none d-lg-block" id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="header-elements">
+                        <div class="site-logo">
+                            <a href="{% url 'mag:index' %}">
+                              <img style='width: 100px;
+   padding: 10px;' src="{{media_url}}img/mag-logo.png" alt="لوگوی من">
+                            </a>
+                        </div>
+
+
+
+                        <div class="main-menu-ex main-menu-ex1">
+                            <ul>
+
+                        {% render_partial 'mag:groups_header' %}
+                            </ul>
+                        </div>
+
+                     <div class="header1-buttons">
+    <div class="vl-search-top">
+        <!-- دکمه جستجو با نام قابل دسترس -->
+        <button class="search-open-btn" aria-label="باز کردن جستجو">
+            <i class="fa-regular fa-magnifying-glass" aria-hidden="true"></i>
+            <span class="visually-hidden">باز کردن جستجو</span>
+        </button>
+    </div>
+    <!-- متن اشتراک به صورت دکمه، برای دستیابی بهتر به کاربران -->
+    <button class="theme-btn1" aria-label="اشتراک">اشتراک</button>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!--=====HEADER END=======-->
+
+<!--=====Mobile header start=======-->
+<div class="mobile-header mobile-header-main d-block d-lg-none">
+    <div class="container-fluid">
+        <div class="col-12">
+            <div class="mobile-header-elements">
+                <div class="mobile-logo">
+                    <a href="{% url 'mag:index' %}"> <img style='width: 70px;' src="{{media_url}}img/mag-logo.png" alt="لوگو نقشه 1"></a>
+                </div>
+                <div class="mobile-nav-icon">
+                    <i class="fa-duotone fa-bars-staggered"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mobile-sidebar d-block d-lg-none">
+    <div class="logo-m">
+         <a href="{% url 'mag:index' %}"> <img style='width: 70px;' src="{{media_url}}img/mag-logo.png" alt="لوگو نقشه 2"></a>
+    </div>
+    <div class="menu-close">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    <div class="mobile-nav">
+        <ul>
+            <li class="has-dropdown">
+                <a href="{% url 'mag:index' %}">تکنولوژی</a>
+            </li>
+<hr>
+            {% render_partial 'mag:groups_header' %}
+        </ul>
+
+
+
+       <hr>
+
+        <br>
+        <div class="contact-infos">
+            <div>شبکه های اجتماعی</div>
+            <ul class="social-icon">
+                {% render_partial 'company:show_media' %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<br><br>

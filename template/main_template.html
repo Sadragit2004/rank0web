@@ -1,0 +1,191 @@
+{% load static %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="fa-IR" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="https://ogp.me/ns#" dir='rtl'>
+
+   <head>
+      <meta charset="UTF-8">
+      <meta name="enamad" content="9992550" /> 
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="apple-mobile-web-app-title" content="RANK0">
+      <meta name="application-name" content="RANK0">
+       <link rel="alternate" href="https://www.rank0.ir/" hreflang="fa-IR" />
+      <meta name="msapplication-TileColor" content="#358597">
+       <link rel="apple-touch-icon" sizes="512x512" href="/media/img/logo-new.png">
+
+<!-- آیکون‌های Favicon برای مرورگرها -->
+<link rel="icon" type="image/png" sizes="32x32" href="/media/img/logo-new.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/media/img/logo-new.png">
+
+<!-- آیکون پیش‌فرض -->
+<link rel="shortcut icon" href="/media/img/logo-new.png">
+      <meta name="theme-color" content="#ffffff">
+      {% if request.GET.utmsource or request.GET.utm_medium or request.GET.utm_campaign %}
+  <link rel="canonical" href="https://rank0.ir/" />
+{% else %}
+  <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+{% endif %}
+
+      <meta property="og:locale" content="fa_IR" />
+    <meta property="og:type" content="website" />
+      {% if request.path == "/" %}
+
+    <style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+
+
+<title>{{meta.page_title}}</title>
+<meta name="description" content="{{meta.description}}"/>
+{% if meta.index == True %}
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+{% else %}
+<meta name="robots" content="nofollow, noindex, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+{% endif %}
+<meta property="og:title" content="{{meta.page_title}}" />
+<meta property="og:description" content="{{meta.description}}" />
+<meta property="og:site_name" content="{{meta.site_name}}" />
+<meta property="og:updated_time" content="{{meta.updated_at}}" />
+<meta property="og:image" content="{{meta.og_image}}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{meta.alt}}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="article:published_time" content="{{meta.created_at}}" />
+<meta property="article:modified_time" content="{{meta.updated_at}}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{meta.page_title}}" />
+<meta name="twitter:description" content="{{meta.description}}" />
+<meta name="twitter:site" content="@ranksefr_com" />
+<meta name="twitter:creator" content="@ranksefr_com" />
+<meta name="twitter:image" content="{{meta.og_image}}" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="صدرا ابادکار" />
+<meta name="twitter:label2" content="Time to read" />
+<meta name="twitter:data2" content="کمتر از یک دقیقه" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "{{ meta.page_title }}",
+  "description": "{{ meta.description }}",
+  "url": "{{ request.build_absolute_uri }}",
+  "inLanguage": "fa",
+  "datePublished": "{{ meta.created_at }}",
+  "dateModified": "{{ meta.updated_at }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "{{ meta.site_name }}",
+    "url": "{{ request.build_absolute_uri }}"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "صدرا ابادکار"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "{{ meta.og_image }}",
+    "width": "1200",
+    "height": "630",
+    "caption": "{{ meta.alt }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ meta.site_name }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://rank0.ir/media/img/logo-new.png",
+      "width": "600",
+      "height": "60"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ request.build_absolute_uri }}"
+  },
+  "organization": {
+    "@type": "Organization",
+    "name": "{{ meta.site_name }}",
+    "url": "{{ request.build_absolute_uri }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://rank0.ir/media/img/logo-new.png",
+      "width": "600",
+      "height": "60"
+    }
+  }
+}
+</script>
+
+       {% else %}
+
+
+          {% block meta1 %}
+          {% endblock meta1 %}
+
+      {% endif %}
+      {% if request.path == "/" %}
+
+
+      {% else %}
+          {% block json %}
+          {% endblock json %}
+      {% endif %}
+
+     
+
+      {% comment %} <link href="https://fonts.googleapis.com" rel="preconnect" /> {% endcomment %}
+      {% comment %} <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+      <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/> {% endcomment %}
+
+      <!-- Bootstrap Css -->
+      <link href="{% static 'css/bootstrap.min.rtl.css' %}" media="screen" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <!-- SlickNav Css -->
+
+        <link href="{% static 'css/slicknav.min.rtl.css' %}" rel="stylesheet" />
+        <!-- Swiper Css -->
+        <link href="{% static 'css/swiper-bundle.min.rtl.css' %}" rel="stylesheet" />
+        <!-- Font Awesome Icon Css-->
+        <link href="{% static 'css/all.rtl.css' %}" media="screen" rel="stylesheet" />
+        <!-- Animated Css -->
+        <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
+        <link href="{% static 'css/text_set.css' %}" rel="stylesheet" />
+        <!-- Magnific Popup Core Css File -->
+        <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet" />
+        <!-- Main Custom Css -->
+        <link href="{% static 'css/div11.css' %}" rel="stylesheet" />
+        <!-- Main Custom Css -->
+        <link href="{% static 'css/custom.rtl4343.css' %}" media="screen" rel="stylesheet" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V1YX18MXD3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V1YX18MXD3');
+</script>
+
+
+  </head>
+
+<body class="tt-magic-cursor">
+   
+    {% include "partials/plus/message.html" %}
+   
+    {% include "partials/header1.html" %}
+
+
+
+    {% block content %}
+
+    {% endblock content %}
+
+
+    {% include "partials/footer.html" %}
+
+    {% include "partials/script.html" %}
+
+</body>
+
+</html>

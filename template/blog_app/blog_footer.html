@@ -1,0 +1,5 @@
+
+{% for blog in blogs %}
+<li><a href="{% url 'blog:blog_detail' slug=blog.slug %}">{{blog.name_blog}}</a></li>
+
+{% endfor %}

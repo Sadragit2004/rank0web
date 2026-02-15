@@ -1,0 +1,683 @@
+{% extends "main_template.html" %} 
+
+{% load render_partial %} 
+
+{% block title1 %} 
+تماس با ما | رنک صفر 
+{% endblock title1 %} 
+
+{% block meta1 %} 
+<title>ارتباط با ما | دریافت پشتیبانی و مشاوره تخصصی</title> 
+<meta name="description" content="برای دریافت پاسخ سوالات و راهنمایی‌های تخصصی از طریق راه‌های ارتباطی مختلف با ما در تماس باشید"/> 
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/> 
+<meta property="og:title" content="ارتباط با ما | دریافت پشتیبانی و مشاوره تخصصی" /> 
+<meta property="og:description" content="برای دریافت پاسخ سوالات و راهنمایی‌های تخصصی با ما در تماس باشید" /> 
+<meta property="og:site_name" content="شرکت ما" /> 
+<meta property="og:updated_time" content="2024-06-15T10:00:00+03:30" /> 
+<meta property="og:image" content="{{media_url}}img/contact-og.jpg" /> 
+<meta property="og:image:width" content="1200" /> 
+<meta property="og:image:height" content="630" /> 
+<meta property="og:image:alt" content="تصویر ارتباط با ما" /> 
+<meta property="article:published_time" content="2024-01-01T00:00:00+03:30" /> 
+<meta property="article:modified_time" content="2024-06-15T10:00:00+03:30" /> 
+<meta name="twitter:card" content="summary_large_image" /> 
+<meta name="twitter:title" content="ارتباط با ما | دریافت پشتیبانی و مشاوره تخصصی" /> 
+<meta name="twitter:description" content="برای دریافت پاسخ سوالات و راهنمایی‌های تخصصی با ما در تماس باشید" /> 
+<meta name="twitter:image" content="{{media_url}}img/contact-og.jpg" /> 
+
+<script type="application/ld+json"> 
+{ 
+  "@context": "https://schema.org", 
+  "@type": "ContactPage", 
+  "name": "ارتباط با ما", 
+  "description": "صفحه تماس با شرکت برای دریافت پشتیبانی و مشاوره", 
+  "url": "{{ request.build_absolute_uri }}", 
+  "inLanguage": "fa", 
+  "contactPoint": { 
+    "@type": "ContactPoint", 
+    "telephone": "+989309087909", 
+    "contactType": "پشتیبانی", 
+    "availableLanguage": "Persian" 
+  } 
+} 
+</script> 
+{% endblock meta1 %} 
+
+{% block content %} 
+
+<style> 
+    /* استایل های کلی */ 
+    :root { 
+        --primary-color: #4e73df; 
+        --primary-dark: #224abe; 
+        --text-color: #555; 
+        --border-color: #e0e0e0; 
+        --shadow: 0 5px 15px rgba(0,0,0,0.05); 
+    } 
+    
+    /* هدر صفحه */ 
+    .contact-header { 
+        padding: 120px 0; 
+        color: #fff; 
+        text-align: center; 
+        position: relative; 
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{media_url}}img/8.jpg'); 
+        background-size: cover; 
+        background-position: center; 
+        background-attachment: fixed; 
+    } 
+    
+    .page-header-box { 
+        position: relative; 
+        z-index: 2; 
+    } 
+    
+    .text-anime-style-3 { 
+        font-size: 3rem; 
+        font-weight: 700; 
+        margin-bottom: 20px; 
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+        animation: fadeInUp 1s ease; 
+    } 
+    
+    /* کارت های اطلاعات تماس */ 
+    .contact-item { 
+        background: #fff; 
+        border-radius: 10px; 
+        overflow: hidden; 
+        box-shadow: var(--shadow); 
+        margin-bottom: 30px; 
+        transition: all 0.3s ease; 
+        height: 100%; 
+        display: flex; 
+        flex-direction: column; 
+    } 
+    
+    .contact-item:hover { 
+        transform: translateY(-5px); 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    } 
+    
+    .contact-content { 
+        padding: 25px; 
+        flex: 1; 
+    } 
+    
+    .contact-content-title { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        margin-bottom: 15px; 
+    } 
+    
+    .contact-content-title h2 { 
+        font-size: 1.5rem; 
+        color: var(--primary-color); 
+        margin: 0; 
+    } 
+    
+    .contact-image { 
+        height: 200px; 
+        overflow: hidden; 
+    } 
+    
+    .contact-image img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        transition: transform 0.5s ease; 
+    } 
+    
+    .contact-item:hover .contact-image img { 
+        transform: scale(1.05); 
+    } 
+    
+    /* فرم تماس */ 
+    .form-container { 
+        background-color: #fff; 
+        border-radius: 10px; 
+        padding: 30px; 
+        box-shadow: var(--shadow); 
+        transition: all 0.3s ease; 
+    } 
+    
+    .form-container:hover { 
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+    } 
+    
+    .form-title { 
+        color: var(--primary-color); 
+        font-weight: 600; 
+        margin-bottom: 25px; 
+        padding-bottom: 15px; 
+        border-bottom: 2px solid #f5f5f5; 
+        display: flex; 
+        align-items: center; 
+    } 
+    
+    .form-group { 
+        margin-bottom: 25px; 
+    } 
+    
+    .form-label { 
+        display: block; 
+        margin-bottom: 8px; 
+        font-weight: 600; 
+        color: var(--text-color); 
+        display: flex; 
+        align-items: center; 
+    } 
+    
+    .input-group { 
+        border: 1px solid var(--border-color); 
+        border-radius: 5px; 
+        overflow: hidden; 
+        transition: all 0.3s; 
+    } 
+    
+    .input-group:focus-within { 
+        border-color: var(--primary-color); 
+        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25); 
+    } 
+    
+    .input-group-prepend { 
+        background: #f8f9fa; 
+        padding: 0 15px; 
+        display: flex; 
+        align-items: center; 
+        color: #6c757d; 
+    } 
+    
+    .form-control { 
+        border: none !important; 
+        padding: 12px 15px; 
+        height: auto; 
+        background: #fff !important; 
+    } 
+    
+    .form-control:focus { 
+        box-shadow: none !important; 
+    } 
+    
+    .form-text { 
+        font-size: 0.8rem; 
+        margin-top: 5px; 
+        color: #6c757d !important; 
+    } 
+    
+    .btn-submit { 
+        background: linear-gradient(to right, var(--primary-color), var(--primary-dark)); 
+        border: none; 
+        padding: 12px 25px; 
+        font-size: 16px; 
+        font-weight: 600; 
+        border-radius: 5px; 
+        width: 100%; 
+        transition: all 0.3s; 
+        color: white; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+    } 
+    
+    .btn-submit:hover { 
+        background: linear-gradient(to right, #3b5ab8, #1a3a8f); 
+        transform: translateY(-2px); 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        color: white; 
+    } 
+    
+    /* نقشه گوگل */ 
+    .google-map { 
+        padding: 60px 0; 
+    } 
+    
+    .google-map iframe { 
+        border-radius: 10px; 
+        box-shadow: var(--shadow); 
+        border: none; 
+        width: 100%; 
+        height: 450px; 
+    } 
+    
+    /* انیمیشن ها */ 
+    @keyframes fadeInUp { 
+        from { 
+            opacity: 0; 
+            transform: translateY(20px); 
+        } 
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        } 
+    } 
+    
+    /* ریسپانسیو */ 
+    @media (max-width: 768px) { 
+        .contact-header { 
+            padding: 80px 0; 
+        } 
+        
+        .text-anime-style-3 { 
+            font-size: 2.2rem; 
+        } 
+        
+        .form-container { 
+            padding: 20px; 
+        } 
+        
+        .contact-item { 
+            margin-bottom: 20px; 
+        } 
+    } 
+    
+    
+    /* استایل اصلی کارت‌ها */ 
+    .contact-cards-container { 
+        display: grid; 
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px; 
+        max-width: 1200px; 
+        margin: 30px auto; 
+        padding: 0 15px; 
+    } 
+
+    .contact-card { 
+        background: white; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+        overflow: hidden; 
+        height: 220px; 
+        display: flex; 
+        flex-direction: column; 
+        transition: all 0.3s ease; 
+    } 
+
+    .contact-card:hover { 
+        transform: translateY(-5px); 
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+    } 
+
+    /* هدر کارت‌ها */ 
+    .card-header { 
+        background: #4e73df; 
+        color: white; 
+        padding: 15px 20px; 
+        display: flex; 
+        align-items: center; 
+    } 
+
+    .card-header i { 
+        font-size: 1.2rem; 
+        margin-left: 10px; 
+    } 
+
+    .card-header h3 { 
+        margin: 0; 
+        font-size: 1.1rem; 
+        font-weight: 600; 
+    } 
+
+    /* بدنه کارت‌ها */ 
+    .card-body { 
+        padding: 20px; 
+        flex-grow: 1; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: space-between; 
+    } 
+
+    .card-body p { 
+        margin: 0; 
+        font-size: 0.95rem; 
+        line-height: 1.6; 
+        color: #555; 
+    } 
+
+    /* بخش اقدامات */ 
+    .card-action { 
+        margin-top: 15px; 
+        padding-top: 10px; 
+        border-top: 1px solid #eee; 
+        display: flex; 
+        align-items: center; 
+        color: #4e73df; 
+        cursor: pointer; 
+        font-size: 0.9rem; 
+        transition: color 0.2s; 
+    } 
+
+    .card-action:hover { 
+        color: #224abe; 
+    } 
+
+    .card-action i { 
+        margin-left: 5px; 
+        font-size: 0.9rem; 
+    } 
+
+    /* نسخه موبایل */ 
+    @media (max-width: 768px) { 
+        .contact-cards-container { 
+            grid-template-columns: 1fr; 
+            gap: 15px; 
+        } 
+        
+        .contact-card { 
+            height: auto; 
+            min-height: 180px; 
+        } 
+        
+        .card-header { 
+            padding: 12px 15px; 
+        } 
+        
+        .card-body { 
+            padding: 15px; 
+        } 
+    }
+
+    /* === استایل‌های مودال چت آنلاین === */
+    .modal-overlay {
+        position: fixed;
+        z-index: 1050;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: none; /* مخفی به صورت پیشفرض */
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    .modal-content-box {
+        background-color: #fefefe;
+        padding: 25px 30px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        transform: scale(0.9);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .modal-overlay.show .modal-content-box {
+        transform: scale(1);
+    }
+
+    .modal-content-box p {
+        font-size: 1.1rem;
+        color: #333;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+    .close-modal-btn {
+        color: #aaa;
+        position: absolute;
+        left: 15px;
+        top: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .close-modal-btn:hover,
+    .close-modal-btn:focus {
+        color: black;
+        text-decoration: none;
+    }
+    
+    .modal-action-btn {
+        background: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-action-btn:hover {
+        background: var(--primary-dark);
+        color: white;
+    }
+</style> 
+
+
+
+<div class="page-header contact-header"> 
+    <div class="container"> 
+        <div class="row"> 
+            <div class="col-lg-12"> 
+                <div class="page-header-box"> 
+                    <h1 style='color:#ffff;' class="text-anime-style-3">تماس با رنک صفر</h1> 
+                    <nav> 
+                        <ol class="breadcrumb"> 
+                            <li class="breadcrumb-item"> 
+                                <a href="{% url 'main:index' %}">خانه</a> 
+                            </li> 
+                            <li aria-current="page" class="breadcrumb-item active"> 
+                                تماس با ما 
+                            </li> 
+                        </ol> 
+                    </nav> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</div> 
+
+<div class="contact-information"> 
+    <div class="container"> 
+        <div class="row"> 
+           <div class="contact-cards-container"> 
+                <div class="contact-card"> 
+                    <div class="card-header"> 
+                        <i class="fas fa-map-marker-alt"></i> 
+                        <h3>آدرس ما</h3> 
+                    </div> 
+                    <div class="card-body"> 
+                        {% render_partial 'company:address' %} 
+                        <div class="card-action"> 
+                            <i class="fas fa-directions"></i> 
+                            <span>مشاهده روی نقشه</span> 
+                        </div> 
+                    </div> 
+                </div> 
+                
+                <div class="contact-card"> 
+                    <div class="card-header"> 
+                        <i class="fas fa-headset"></i> 
+                        <h3>پشتیبانی</h3> 
+                    </div> 
+                    <div class="card-body"> 
+                        <p>پاسخگویی 24 ساعته در 7 روز هفته</p> 
+                        <div class="card-action" id="online-chat-trigger"> 
+                            <i class="fas fa-comment-alt"></i> 
+                            <span>گفتگوی آنلاین</span> 
+                        </div> 
+                    </div> 
+                </div> 
+                
+                <div class="contact-card"> 
+                    <div class="card-header"> 
+                        <i class="fas fa-phone-volume"></i> 
+                        <h3>تماس فوری</h3> 
+                    </div> 
+                    <div class="card-body"> 
+                        {% render_partial 'company:mobile_number2' %} 
+                        <div class="card-action"> 
+                            <i class="fas fa-phone"></i> 
+                            <span>تماس سریع</span> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</div> 
+
+<div class="contact-us"> 
+    <div class="container"> 
+        <div class="row align-items-center"> 
+            <div class="col-lg-6"> 
+                <div class="contact-details"> 
+                    <div class="section-title"> 
+                        <h2 class="text-anime-style-3">ارتباط با تیم رنک صفر</h2> 
+                    </div> 
+                    <div class="contact-detail-body"> 
+                        <p style="font-size: 1.1rem; line-height: 1.8;"> 
+                            برای دریافت مشاوره تخصصی در زمینه سئو، طراحی سایت و دیجیتال مارکتینگ، فرم زیر را پر کنید یا از طریق راه‌های ارتباطی با ما در تماس باشید. 
+                        </p> 
+                        <h3 style="color: var(--primary-color); margin-top: 30px;"> 
+                            <i class="fas fa-share-alt ml-2"></i> شبکه‌های اجتماعی: 
+                        </h3> 
+                        <ul class="social-links" style="display: flex; gap: 15px; margin-top: 15px; padding: 0; list-style: none;"> 
+                            {% render_partial 'company:show_media' %} 
+                        </ul> 
+                    </div> 
+                </div> 
+            </div> 
+            
+            <div class="col-lg-6"> 
+                <div class="contact-form-box"> 
+                    <div class="contact-form"> 
+                        <form action="" method="POST" data-toggle="validator"> 
+                            {% csrf_token %} 
+                            <div class="form-container"> 
+                                <h3 class="form-title"> 
+                                    <i class="fas fa-edit ml-2"></i> فرم درخواست تماس 
+                                </h3> 
+                                
+                                <div class="form-group"> 
+                                    <label for="{{ form.type_call.id_for_label }}" class="form-label"> 
+                                        <i class="fas fa-tag ml-2"></i> نوع درخواست * </label> 
+                                    <div class="input-group"> 
+                                        <div class="input-group-prepend"> 
+                                            <i class="fas fa-headset"></i> 
+                                        </div> 
+                                        {{ form.type_call }} 
+                                    </div> 
+                                    <small class="form-text">لطفا نوع درخواست خود را انتخاب کنید</small> 
+                                </div> 
+                                
+                                <div class="form-group"> 
+                                    <label for="{{ form.phone_number.id_for_label }}" class="form-label"> 
+                                        <i class="fas fa-phone ml-2"></i> شماره تماس * </label> 
+                                    <div class="input-group"> 
+                                        <div class="input-group-prepend"> 
+                                            <span>+98</span> 
+                                        </div> 
+                                        {{ form.phone_number }} 
+                                    </div> 
+                                    <small class="form-text">مثال: 9123456789</small> 
+                                </div> 
+                                
+                                <div class="form-group"> 
+                                    <label for="{{ form.title_time.id_for_label }}" class="form-label"> 
+                                        <i class="far fa-clock ml-2"></i> زمان مناسب برای تماس 
+                                    </label> 
+                                    <div class="input-group"> 
+                                        <div class="input-group-prepend"> 
+                                            <i class="far fa-calendar-alt"></i> 
+                                        </div> 
+                                        {{ form.title_time }} 
+                                    </div> 
+                                    <small class="form-text">مثال: بین ساعت 14 تا 18</small> 
+                                </div> 
+
+                                <button type="submit" class="btn-submit"> 
+                                    <i class="fas fa-paper-plane ml-2"></i> ارسال درخواست 
+                                </button> 
+                            </div> 
+                        </form> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</div> 
+
+<div class="google-map"> 
+    <div class="container"> 
+        <div class="row"> 
+            <div class="col-md-12"> 
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100502.08643461317!2d46.3020285!3d38.077595349999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x401a05175b8429e1%3A0x59cb1dc6f21233fb!2sTabriz%2C%20East%20Azerbaijan%20Province!5e0!3m2!1sen!2s!4v1748940046707!5m2!1sen!2s" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"></iframe> 
+            </div> 
+        </div> 
+    </div> 
+</div> 
+
+<div id="chat-notice-modal" class="modal-overlay">
+    <div class="modal-content-box">
+        <span class="close-modal-btn">&times;</span>
+        <p>برای استفاده از گفتگوی آنلاین، لطفاً به صفحه اصلی مراجعه کرده و از آیکون گوشه پایین سمت راست استفاده نمایید.</p>
+        <a href="{% url 'main:index' %}" class="modal-action-btn">رفتن به صفحه اصلی</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // گرفتن عناصر مودال از DOM
+    const chatModal = document.getElementById('chat-notice-modal');
+    const chatTrigger = document.getElementById('online-chat-trigger');
+    const closeModalBtn = document.querySelector('.close-modal-btn');
+
+    // جلوگیری از اجرای کد در صورت عدم وجود عناصر
+    if (!chatModal || !chatTrigger || !closeModalBtn) {
+        return;
+    }
+
+    // تابع برای نمایش مودال
+    function showModal() {
+        chatModal.classList.add('show');
+    }
+
+    // تابع برای بستن مودال
+    function closeModal() {
+        chatModal.classList.remove('show');
+    }
+
+    // رویداد کلیک برای باز کردن مودال
+    chatTrigger.addEventListener('click', function(e) {
+        e.preventDefault(); // جلوگیری از هرگونه رفتار پیش‌فرض
+        showModal();
+    });
+
+    // رویداد کلیک برای بستن مودال با دکمه ×
+    closeModalBtn.addEventListener('click', closeModal);
+
+    // رویداد کلیک برای بستن مودال با کلیک روی پس‌زمینه تیره
+    chatModal.addEventListener('click', function(e) {
+        if (e.target === chatModal) {
+            closeModal();
+        }
+    });
+    
+    // بستن مودال با فشردن کلید Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape" && chatModal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+});
+</script>
+
+{% endblock content %}

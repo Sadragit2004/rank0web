@@ -1,0 +1,359 @@
+{% load render_partial %}
+{% load humanize %}
+{% load static %}
+
+<style>
+    /* ------------------------------ */
+    /* Plans Section - Scoped Styles */
+    /* ------------------------------ */
+
+    /* General Styles */
+   
+   
+     :root {
+
+       
+
+      
+
+        --success-color: #28a745;
+
+        --danger-color: #dc3545;
+
+        --light-color: #f8f9fa;
+
+        --dark-color: #343a40;
+
+        --text-color: #333;
+
+        --border-radius: 15px;
+
+        --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+        --font-family: 'Vazirmatn', sans-serif; /* A beautiful Persian font like Vazirmatn */
+
+    } 
+   
+
+    .plans-section {
+        font-family: var(--font-family);
+        background-color: var(--light-color);
+        direction: rtl;
+        text-align: right;
+        padding: 60px 0;
+    }
+
+    /* Section Title */
+    .plans-section .section-header {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .plans-section .section-header .company-name {
+        color: var(--secondary-color);
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .plans-section .section-header .main-title {
+        color: var(--dark-color);
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+    
+    /* Plans Container */
+    .plans-section .plans-carousel {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 20px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .plans-section .plans-carousel::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Desktop Grid Layout */
+    @media (min-width: 992px) {
+        .plans-section .plans-carousel {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            overflow-x: visible;
+        }
+    }
+
+    /* Plan Card */
+    .plans-section .plan-card {
+        flex: 0 0 90%;
+        scroll-snap-align: center;
+        margin: 0 10px;
+        background: #fff;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .plans-section .plan-card:first-child { margin-right: 20px; }
+    .plans-section .plan-card:last-child { margin-left: 20px; }
+    
+    @media (min-width: 992px) {
+        .plans-section .plan-card {
+            margin: 0;
+            flex-basis: auto;
+        }
+        .plans-section .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+    }
+    
+    /* Special Plan Ribbon */
+    .plans-section .plan-card__ribbon {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: 110px;
+        height: 110px;
+    }
+    .plans-section .plan-card__ribbon img {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Card Header */
+    .plans-section .plan-card__header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .plans-section .plan-card__title {
+      
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 15px;
+    }
+    
+    .plans-section .plan-card__image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    /* Features List */
+    .plans-section .plan-card__features {
+        margin: 20px 0;
+        flex-grow: 1;
+    }
+    
+    .plans-section .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .plans-section .feature-list-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        color: var(--text-color);
+        font-size: 0.95rem;
+        transition: opacity 0.3s ease, max-height 0.3s ease;
+    }
+    
+    .plans-section .feature-list-item.hidden-item {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        margin-bottom: 0;
+    }
+    
+    .plans-section .feature-list-item.visible-item {
+        opacity: 1;
+        max-height: 50px;
+    }
+
+    .plans-section .feature-list-item .check {
+        color: var(--success-color);
+        margin-left: 10px;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    
+    .plans-section .toggle-features-btn {
+        background: none;
+        border: none;
+        color: var(--primary-color);
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .plans-section .toggle-features-btn i {
+        margin-right: 5px;
+        transition: transform 0.3s ease;
+    }
+    .plans-section .toggle-features-btn.active i {
+        transform: rotate(180deg);
+    }
+
+    /* Price Section */
+    .plans-section .plan-card__price-section {
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .plans-section .price-main {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--dark-color);
+    }
+    
+    .plans-section .price-currency {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-right: 5px;
+    }
+    
+    /* CTA Section */
+    .plans-section .plan-card__cta {
+        margin-top: 25px;
+    }
+    
+    .plans-section .cta-button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(45deg, var(--primary-color), #0056b3);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .plans-section .cta-button:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    .plans-section .cta-button .cta-icon {
+        margin-left: 10px;
+    }
+</style>
+
+
+<div class="plans-section">
+    <div class="container">
+        <div class="section-header">
+           
+            <div style='text-align:right; font-size:19px;' class="main-title">پلن‌های پایه شرکت</div>
+        </div>
+        
+        <div class="plans-carousel">
+            {% for plan in plans %}
+                <div class="plan-card">
+                    {% if plan.is_org %}
+                        <div class="plan-card__ribbon">
+                            <img loading='lazy' src="{% static 'images/label-golden.svg' %}" alt="پلن ویژه" />
+                        </div>
+                    {% endif %}
+
+                    <div class="plan-card__header">
+                        <div class="plan-card__title">{{ plan.title }}</div>
+                        <img loading='lazy' class="plan-card__image" alt="{{ plan.title }}" src="{{ media_url }}{{ plan.image_name }}">
+                    </div>
+
+                    <div class="plan-card__features">
+                        <ul class="feature-list">
+                            {% for item_p in plan.plan_item.all %}
+                                <li class="feature-list-item {% if forloop.counter > 5 %}hidden-item{% endif %}">
+                                    {% if item_p.is_checked %}
+                                        <i class="check">✔</i>
+                                    {% endif %}
+                                    <span class="feature-text">{{ item_p.title }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% if plan.plan_item.all|length > 5 %}
+                            <button class="toggle-features-btn" onclick="toggleFeatures(this)">
+                                <span class="text">مشاهده همه ویژگی‌ها</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        {% endif %}
+                    </div>
+
+                    <div class="plan-card__price-section">
+                        <div class="price-main">
+                            {{ plan.price | intcomma }} <span class="price-currency">تومان</span>
+                        </div>
+                    </div>
+
+                    <div class="plan-card__cta">
+                        <a href="/call" class="cta-button">
+                            <i class="fas fa-phone-alt cta-icon"></i>
+                            <span>مشاوره و خرید</span>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+       
+    </div>
+</div>
+
+
+<script>
+    function toggleFeatures(button) {
+        const featureList = button.previousElementSibling;
+        const hiddenItems = featureList.querySelectorAll('.hidden-item');
+        const buttonText = button.querySelector('.text');
+        const buttonIcon = button.querySelector('i');
+        
+        const isExpanded = button.classList.contains('active');
+
+        if (isExpanded) {
+            // Collapse
+            hiddenItems.forEach(item => {
+                item.classList.remove('visible-item');
+            });
+            buttonText.textContent = 'مشاهده همه ویژگی‌ها';
+        } else {
+            // Expand
+            hiddenItems.forEach(item => {
+                item.classList.add('visible-item');
+            });
+            buttonText.textContent = 'نمایش کمتر';
+        }
+        
+        button.classList.toggle('active');
+        buttonIcon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    // Initialize hidden items for CSS transitions
+    document.addEventListener('DOMContentLoaded', function() {
+        const allHiddenItems = document.querySelectorAll('.plans-section .hidden-item');
+        allHiddenItems.forEach(item => {
+            // This ensures the transition works on the first click
+            item.style.maxHeight = '0';
+        });
+    });
+</script>

@@ -1,0 +1,77 @@
+
+{% load static %}
+<!--=== js === -->
+<!--=== JS ===-->
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/fontawesome.js' %}"></script>
+<script src="{% static 'assets/js/mobile-menu.js' %}"></script>
+<script src="{% static 'assets/js/jquery.magnific-popup.js' %}"></script>
+<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.countup.js' %}"></script>
+<script src="{% static 'assets/js/slick-slider.js' %}"></script>
+<script src="{% static 'assets/js/circle-progress.js' %}"></script>
+<script src="{% static 'assets/js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'assets/js/gsap.min.js' %}"></script>
+<script src="{% static 'assets/js/ScrollTrigger.min.js' %}"></script>
+<script src="{% static 'assets/js/swiper-bundle.js' %}"></script>
+<script src="{% static 'assets/js/Splitetext.js' %}"></script>
+<script src="{% static 'assets/js/text-animation.js' %}"></script>
+<script src="{% static 'assets/js/aos.js' %}"></script>
+<script src="{% static 'assets/js/SmoothScroll.js' %}"></script>
+<script src="{% static 'assets/js/jaquery-ripples.js' %}"></script>
+<script src="{% static 'assets/js/jquery.lineProgressbar.js' %}"></script>
+<script src="{% static 'assets/js/animation.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/js/faq.js' %}"></script>
+
+<script>
+    
+  document.addEventListener("DOMContentLoaded", function () {
+  // فرم و ورودی را انتخاب کنید
+  const form = document.querySelector("form"); // اگر فرم دارای کلاس/ایدی متفاوت است، این خط را اصلاح کنید.
+  const input = document.querySelector("input"); // اگر input دارای کلاس/ایدی متفاوت است، این خط را اصلاح کنید.
+
+  // کاراکترهای ممنوع مرتبط به SQL Injection
+  const forbiddenChars = ["'", '"', ";", "--", "/*", "*/", "#", "=", "\\", "|"];
+
+  // تابع بررسی کاراکترهای غیرمجاز
+  function hasForbiddenChars(value) {
+    return forbiddenChars.some((char) => value.includes(char));
+  }
+
+  form.addEventListener("submit", function (event) {
+    const inputValue = input.value.trim(); // مقدار ورودی را دریافت کرده و فاصله‌های اضافی حذف می‌شود.
+
+    // بررسی خالی بودن مقدار ورودی
+    if (inputValue === "") {
+      event.preventDefault(); // جلوگیری از ارسال فرم
+      alert("ورودی نمی‌تواند خالی باشد!");
+      return;
+    }
+
+    // بررسی وجود کاراکترهای ممنوع
+    if (hasForbiddenChars(inputValue)) {
+      event.preventDefault(); // جلوگیری از ارسال فرم
+      alert("ورودی شما دارای کاراکترهای غیرمجاز است. لطفاً آن را اصلاح کنید!");
+      return;
+    }
+  });
+});
+
+    
+
+  
+    // بررسی URL صفحه
+ // ریدایرکت فوری قبل از بارگذاری صفحه
+    (function() {
+        const currentURL = window.location.href;
+        const url = new URL(currentURL);
+        const pageParam = url.searchParams.get("page");
+
+        // اگر page=1 باشد، ریدایرکت فوری انجام بده
+        if (pageParam === "1") {
+            url.searchParams.delete("page"); // حذف پارامتر
+            window.location.replace(url.toString()); // هدایت فوری
+        }
+    })();
+</script>

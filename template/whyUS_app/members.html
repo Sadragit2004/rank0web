@@ -1,0 +1,221 @@
+{% load render_partial %}
+
+<style>
+    
+    /* ================================================== */
+/* === استایل‌های ریسپانسیو و ایزوله برای بخش تیم === */
+/* ================================================== */
+
+/* کانتینر اصلی بخش تیم */
+.our-team {
+    padding: 60px 0;
+    background-color: #f9f9f9; /* یک پس‌زمینه ملایم برای تمایز بخش */
+}
+
+/* برای اطمینان از اینکه ردیف به درستی نمایش داده می‌شود */
+.our-team .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+/* ستون‌بندی ریسپانسیو */
+.our-team .col-lg-3, .our-team .col-md-6 {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-bottom: 30px; /* ایجاد فاصله عمودی بین ردیف‌ها */
+}
+
+/* استایل اصلی کارت هر عضو */
+.our-team .team-member-item {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; /* برای هم‌قد شدن کارت‌ها در یک ردیف */
+    display: flex;
+    flex-direction: column;
+}
+
+.our-team .team-member-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* بخش تصویر */
+.our-team .team-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.our-team .team-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.our-team .team-member-item:hover .team-image img {
+    transform: scale(1.05); /* افکت زوم روی تصویر هنگام هاور */
+}
+
+/* آیکون‌های شبکه‌های اجتماعی */
+.our-team .our-team-social-icon {
+    position: absolute;
+    bottom: -50px; /* در ابتدا مخفی باشد */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    transition: bottom 0.3s ease-in-out;
+}
+
+.our-team .team-member-item:hover .our-team-social-icon {
+    bottom: 0; /* نمایش هنگام هاور روی کارت */
+}
+
+.our-team .our-team-social-icon ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.our-team .our-team-social-icon li {
+    margin: 0 8px;
+}
+
+.our-team .our-team-social-icon a.social-icon {
+    display: block;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.our-team .our-team-social-icon a.social-icon:hover {
+    color: #007bff; /* رنگ هاور آیکون‌ها */
+}
+
+/* بخش محتوای کارت (نام و سِمَت) */
+.our-team .team-body {
+    padding: 20px;
+    text-align: right; /* متن راست‌چین */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.our-team .team-content h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0 0 5px 0;
+}
+
+.our-team .team-content p {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 0;
+}
+
+/* آیکون اشتراک‌گذاری */
+.our-team .team-icon a {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.our-team .team-icon a:hover {
+    opacity: 1;
+}
+
+.our-team .team-icon img {
+    width: 20px; /* اندازه مناسب برای آیکون */
+}
+
+/* -------------------------------------- */
+/* --- قوانین ریسپانسیو (Media Queries) --- */
+/* -------------------------------------- */
+
+/* برای تبلت‌ها */
+@media (max-width: 991.98px) {
+    .our-team .col-lg-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* برای موبایل‌ها */
+@media (max-width: 767.98px) {
+    .our-team .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+</style>
+
+
+<div class="our-team">
+    <div class="container">
+      <div class="row section-row align-items-center">
+        <div class="col-lg-12">
+          <!-- Section Title Start -->
+          <div class="section-title">
+            <div style='font-size: 15px; color:#333; letter-spacing: -0.05em; font-weight: 700; margin-bottom: 0;'  class="">تیم</div> <br>
+
+            <h2 class="text-anime-style-3">متخصصان {% render_partial 'company:name' %}</h2>
+          </div>
+          <!-- Section Title End -->
+        </div>
+      </div>
+      <div class="row">
+
+        {% for mem in members %}
+        <div class="col-lg-3 col-md-6">
+            <!-- Team Member Item Start -->
+            <div class="team-member-item " data-wow-delay="0.25s">
+              <!-- Team Img Start -->
+              <div class="team-image">
+                <figure>
+                  <img alt="{{mem.title}}" src="{{media_url}}{{mem.image_name}}" />
+                </figure>
+                <div class="our-team-social-icon">
+                  <ul>
+
+                    {% for a in mem.member_social.all %}
+                    <li>
+                        <a class="social-icon" href="{{a.link}}"
+                          >{% autoescape off %}{{a.icon}}{% endautoescape %}</a>
+                      </li>
+
+                    {% endfor %}
+
+                  </ul>
+                </div>
+              </div>
+              <!-- Team Img End -->
+              <!-- Team Body Start -->
+              <div class="team-body">
+                <div class="team-content">
+                  <h3 id='imp'>{{mem.title}}</h3>
+                  <p id='imp'>{{mem.who}}</p>
+                </div>
+                <div class="team-icon">
+                  <a href=""
+                    ><img alt="ایکون اشتراک گذاری" src="{{media_url}}images/icon-share.svg"
+                  /></a>
+                </div>
+              </div>
+              <!-- Team Body End -->
+            </div>
+            <!-- Team Member Item End -->
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>

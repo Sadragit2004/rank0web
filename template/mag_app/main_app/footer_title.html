@@ -1,0 +1,6 @@
+{% for mag in groups %}
+
+<li><a href="{% url 'mag:show-mag' slug=mag.slug %}">{{mag.title}}</a></li>
+
+
+{% endfor %}

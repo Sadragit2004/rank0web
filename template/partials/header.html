@@ -1,0 +1,131 @@
+{% load render_partial %}
+{% load static %}
+
+<style>
+    .mobile-buttons {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #fff; /* رنگ زمینه */
+        z-index: 1000; /* مطمئن شوید روی سایر عناصر قرار دارد */
+        display: flex;
+        justify-content: space-around;
+        border-top: 1px solid #ddd; /* خط بالای نوار */
+        padding: 10px 0; /* فضای داخلی */
+      }
+
+</style>
+
+<header class="main-header">
+    <div class="header-sticky">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <!-- Logo Start -->
+          {% render_partial 'company:logo' %}
+          <!-- Logo End -->
+          <!-- Main Menu Start -->
+          <div id="desktop-menu" class="collapse navbar-collapse main-menu">
+            <div class="nav-menu-wrapper">
+                <ul class="navbar-nav mr-auto" id="menu">
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about:about' %}">چرا رنک صفر ؟</a>
+                    </li>
+                    <li class="nav-item d-none d-md-block">
+                        <a class="nav-link" href="{% url 'service:services' %}">خدمات ما</a>
+                    </li>
+                    <li class="nav-item d-none d-md-block">
+                        <a class="nav-link" href="{% url 'sample:sample_list' %}">نمونه کارها</a>
+                    </li>
+                    <li class="nav-item d-none d-md-block">
+                        <a class="nav-link" href="https://rank0.ir/tabriz-seo">خدمات سئو در تبریز</a>
+                    </li>
+                    <li class="nav-item d-none d-md-block">
+                        <a class="nav-link" href="{% url 'mag:index' %}">رنک مگ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'call:call' %}">تماس با  ما</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+              <!-- نوار دکمه‌های موبایل -->
+        <div class="mobile-buttons d-md-none">
+          <a href="{% url 'main:index' %}" class="mobile-btn">
+              <i class="fas fa-home"></i>
+              <span>خانه</span>
+          </a>
+          <a href="{% url 'service:services' %}" class="mobile-btn">
+              <i class="fas fa-laptop-code"></i>
+              <span>طراحی سایت</span>
+          </a>
+          <a href="{% url 'sample:sample_list' %}" class="mobile-btn">
+              <i class="fas fa-briefcase"></i>
+              <span>نمونه کارها</span>
+          </a>
+          <a href="{% url 'mag:index' %}" class="mobile-btn">
+              <i class="fas fa-newspaper"></i>
+              <span>رنک مگ</span>
+          </a>
+        </div>
+
+
+            <!-- Let’s Start Button Start -->
+          {% render_partial 'company:mobile_number' %}
+            <!-- Let’s Start Button End -->
+          </div>
+          <!-- Main Menu End -->
+          {% comment %} <div class="navbar-toggle d-none d-md-block"></div> {% endcomment %}
+
+      </nav>
+      <div class="responsive-menu"></div>
+    </div>
+  </header>
+
+
+
+
+  <!-- لینک به فایل CSS موبایل -->
+<script>
+  // ایجاد لینک برای فایل CSS مخصوص موبایل
+  const mobileMenuLink = document.createElement('link');
+  mobileMenuLink.rel = 'stylesheet';
+  mobileMenuLink.href = '{% static "css/mobile_menu.css" %}'; // مسیر صحیح فایل CSS موبایل
+
+  // بررسی عرض صفحه و اضافه کردن CSS موبایل در حالت موبایل
+  if (window.innerWidth <= 768) {
+      document.head.appendChild(mobileMenuLink); // افزودن لینک CSS موبایل
+  } else {
+      // حذف CSS موبایل در حالت دسکتاپ
+      const existingLink = document.querySelector('link[href="{% static "css/mobile_menu.css" %}"]');
+      if (existingLink) {
+          document.head.removeChild(existingLink); // حذف لینک CSS موبایل
+      }
+  }
+
+  // نظارت بر تغییر اندازه صفحه برای اضافه کردن یا حذف فایل CSS موبایل
+  window.addEventListener('resize', function() {
+      if (window.innerWidth <= 768) {
+          if (!document.head.contains(mobileMenuLink)) {
+              document.head.appendChild(mobileMenuLink); // افزودن لینک CSS موبایل
+          }
+      } else {
+          const existingLink = document.querySelector('link[href="{% static "css/mobile_menu.css" %}"]');
+          if (existingLink) {
+              document.head.removeChild(existingLink); // حذف لینک CSS موبایل
+          }
+      }
+  });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuContainer = document.getElementById('navbar-toggle');
+        if (menuContainer && window.innerWidth < 768) {
+            menuContainer.style.display = 'none';
+        }
+    });
+
+
+</script>
